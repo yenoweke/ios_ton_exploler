@@ -1,6 +1,6 @@
-# ios_ton_exploler
+# iOS Application to explore Ton blockchain
 
-## Simple Ton exploler with filter
+## Simple Ton explorer with filter
 
-Donate:
-TON: EQCjoMgPIVwOX0H5sJTdKexlVSjB4czgNkAOeRJ5UnDGULg5
+Donate to support\
+💎 TON: EQCjoMgPIVwOX0H5sJTdKexlVSjB4czgNkAOeRJ5UnDGULg5
