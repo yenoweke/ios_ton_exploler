@@ -1,0 +1,39 @@
+"Common.Apply" = "Apply";
+"Common.Reset" = "Reset";
+"Common.Error" = "Error";
+
+"InputAddress.Go" = "Go";
+"InputAddress.Input" = "Enter TON Address";
+"InputAddress.Error.isNotValid" = "Address is not valid";
+
+"Transaction.List.title" = "Transactions";
+"Transaction.List.addressBalance" = "Balance:";
+
+"Transaction.Details.title" = "Transaction Information";
+"Transaction.Details.logicalTime" = "Logical time:";
+"Transaction.Details.timeStamp" = "TimeStamp";
+"Transaction.Details.totalFee" = "Total fee:";
+"Transaction.Details.storageFee" = "Storage fee:";
+"Transaction.Details.otherFee" = "Other fee:";
+"Transaction.Details.messages" = "Messages:";
+"Transaction.Details.messagesInfo" = "%@ input, %@ output";
+
+"Message.empty" = "Empty";
+"Message.in" = "In:";
+"Message.out" = "Out:";
+"Message.source" = "Source";
+"Message.destination" = "Destination";
+"Message.value" = "Value";
+"Message.forwardFee" = "Forward fee";
+"Message.ihrFee" = "IHR fee";
+"Message.creationLT" = "Creation LT";
+"Message.bodyHash" = "Body hash";
+"Message.message" = "Message";
+
+"Transaction.Filter.title" = "Filter transactions";
+"Transaction.Filter.messageTypes" = "Message types";
+"Transaction.Filter.minValue" = "Min value";
+"Transaction.Filter.maxValue" = "Max value";
+"Transaction.Filter.all" = "All";
+"Transaction.Filter.onlyIn" = "Only IN";
+"Transaction.Filter.onlyOut" = "Only OUT";

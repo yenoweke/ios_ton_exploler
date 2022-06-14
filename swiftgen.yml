@@ -1,0 +1,30 @@
+input_dir: ton/Resources/
+output_dir: ton/Resources/Generated/
+
+xcassets:
+  inputs:
+    - Assets.xcassets
+    - Images.xcassets
+    - Colors.xcassets
+  outputs:
+    templateName: swift5
+    params:
+      forceProvidesNamespaces: true
+    output: Assets.swift
+
+fonts:
+  inputs: Mulish
+  outputs:
+    templateName: swift5
+    params:
+      enumName: "Fonts"
+    output: Fonts.swift
+
+strings:
+  inputs:
+    - Localization/en.lproj/Localizable.strings
+  outputs:
+    - templateName: structured-swift5
+      params:
+        publicAccess: true
+      output: L10n.swift
