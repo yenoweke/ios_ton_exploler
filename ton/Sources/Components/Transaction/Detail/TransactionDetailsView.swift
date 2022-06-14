@@ -26,15 +26,14 @@ struct TransactionDetailsView: View {
                 AddressDetailItemView(vm: self.vm.timeStamp)
                 
                 HStack {
-                    AddressDetailItemView(vm: self.vm.fee.total)
+                    AddressDetailItemView(vm: self.vm.fee.total, textStyle: .caption)
                         .padding(.trailing)
 
-                    AddressDetailItemView(vm: self.vm.fee.storage)
+                    AddressDetailItemView(vm: self.vm.fee.storage, textStyle: .caption)
                         .padding(.trailing)
 
-                    AddressDetailItemView(vm: self.vm.fee.other)
+                    AddressDetailItemView(vm: self.vm.fee.other, textStyle: .caption)
                 }
-                .font(AppFont.regular.textStyle(.caption))
                 
                 AddressDetailItemView(vm: self.vm.messagesCount)
                 
