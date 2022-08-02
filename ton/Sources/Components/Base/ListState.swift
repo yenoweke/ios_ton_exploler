@@ -45,6 +45,13 @@ enum ListState<Element: Identifiable> {
         }
     }
     
+    var isLoadingNextPageError: Bool {
+        switch self {
+        case .loadNextPageError: return true
+        default: return false
+        }
+    }
+    
     var loadingNextPage: Bool {
         switch self {
         case .loadingNextPage: return true

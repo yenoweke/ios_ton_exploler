@@ -13,6 +13,7 @@
 		5C74A3A89C74CF340820D46C /* TransactionListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A12C8017DA76FECD697F /* TransactionListItemViewModel.swift */; };
 		5C74A40C5B7683EA69652798 /* TransactionListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74AAD83EDB293931D80D47 /* TransactionListItemView.swift */; };
 		5C74A4CBD3B0DDC84A5011C7 /* GetTransactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74AADA7C6CE746FA233321 /* GetTransactions.swift */; };
+		5C74A4E37771B1DC816E4127 /* WatchlistItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A2928482FE2BD1AAEC45 /* WatchlistItemViewModel.swift */; };
 		5C74A5DBB74AAE7B25553085 /* GetAddressInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A8652D9D44807C32E7F8 /* GetAddressInfo.swift */; };
 		5C74A6215EE966E893AAFEFC /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74AA3B0A87374F68F382E1 /* MessageViewModel.swift */; };
 		5C74A624E6D1316FAD9A8240 /* APIHeadersPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A46DAF5181E14E97CC62 /* APIHeadersPlugin.swift */; };
@@ -24,13 +25,28 @@
 		5C74AB50B7B934A77F7E960F /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A7569EF9DC1E2AA0325E /* APIService.swift */; };
 		5C74ACA21CDBC39299FC0F22 /* Fonts+swiftui.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74AE58760E0A91BAE65AB9 /* Fonts+swiftui.swift */; };
 		5C74AFFF52999638E65EA80D /* TonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74AC4CF0484AAB8E7A5E0D /* TonService.swift */; };
+		D620BF8A2859D35A0051DB46 /* TransactionsDomainPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = D620BF892859D35A0051DB46 /* TransactionsDomainPlugin.swift */; };
+		D620BF8C2859DAB10051DB46 /* GetWalletInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D620BF8B2859DAB10051DB46 /* GetWalletInformation.swift */; };
+		D621D60F28940EA6002B603B /* EditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621D60E28940EA6002B603B /* EditAddressView.swift */; };
+		D621D61128941423002B603B /* EditAddressComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621D61028941423002B603B /* EditAddressComponent.swift */; };
+		D621D61328941495002B603B /* EditAddressPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D621D61228941495002B603B /* EditAddressPresenter.swift */; };
 		D6493BC12858CEC50037F9A0 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6493BC02858CEC50037F9A0 /* ErrorView.swift */; };
 		D6909DBC285493F3001B9A47 /* TransactionsFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6909DBB285493F3001B9A47 /* TransactionsFilterView.swift */; };
+		D69202552863106B00AE5AF3 /* AddToWatchlistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69202542863106B00AE5AF3 /* AddToWatchlistButton.swift */; };
+		D69202572863131800AE5AF3 /* WatchlistStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69202562863131800AE5AF3 /* WatchlistStorage.swift */; };
+		D692025928631BB200AE5AF3 /* AddToWatchlistComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D692025828631BB200AE5AF3 /* AddToWatchlistComponent.swift */; };
+		D692025B28631BF900AE5AF3 /* AddToWatchlistPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D692025A28631BF900AE5AF3 /* AddToWatchlistPresenter.swift */; };
+		D692025D2863222900AE5AF3 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = D692025C2863222900AE5AF3 /* UserDefault.swift */; };
+		D69202602863239800AE5AF3 /* WatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D692025F2863239800AE5AF3 /* WatchlistView.swift */; };
+		D692026228634C8C00AE5AF3 /* WatchlistItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D692026128634C8C00AE5AF3 /* WatchlistItemView.swift */; };
+		D6A2BA66288EA6C000FD35E1 /* WatchlistRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A2BA65288EA6C000FD35E1 /* WatchlistRouter.swift */; };
 		D6A8C450284DF19A0044F87C /* tonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A8C44F284DF19A0044F87C /* tonApp.swift */; };
 		D6A8C454284DF19C0044F87C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6A8C453284DF19C0044F87C /* Assets.xcassets */; };
 		D6A8C457284DF19C0044F87C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6A8C456284DF19C0044F87C /* Preview Assets.xcassets */; };
 		D6A8C45F284DF1F70044F87C /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = D6A8C45E284DF1F70044F87C /* Moya */; };
 		D6AA34B9284E6BDF005EC78C /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AA34B8284E6BDF005EC78C /* Formatters.swift */; };
+		D6CBD82E2886D2FC005AC250 /* WatchlistPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CBD82D2886D2FC005AC250 /* WatchlistPresenter.swift */; };
+		D6CBD8302886D622005AC250 /* WatchlistComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6CBD82F2886D622005AC250 /* WatchlistComponent.swift */; };
 		D6E7A2F12858DEE3004EA27F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6E7A2F02858DEE3004EA27F /* Launch Screen.storyboard */; };
 		D6E7CD312853845500EBB8C2 /* AddressInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E7CD302853845400EBB8C2 /* AddressInfoView.swift */; };
 		D6F59F3B28551702008BD120 /* InputAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6F59F3A28551702008BD120 /* InputAddressView.swift */; };
@@ -63,6 +79,7 @@
 
 /* Begin PBXFileReference section */
 		5C74A12C8017DA76FECD697F /* TransactionListItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionListItemViewModel.swift; sourceTree = "<group>"; };
+		5C74A2928482FE2BD1AAEC45 /* WatchlistItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchlistItemViewModel.swift; sourceTree = "<group>"; };
 		5C74A46DAF5181E14E97CC62 /* APIHeadersPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHeadersPlugin.swift; sourceTree = "<group>"; };
 		5C74A65C879BD4A4E359B143 /* View+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
 		5C74A709933C46294E9AE63A /* TransactionDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailsView.swift; sourceTree = "<group>"; };
@@ -79,13 +96,28 @@
 		5C74AD03E5A6BBDEC3A69648 /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5C74AE58760E0A91BAE65AB9 /* Fonts+swiftui.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Fonts+swiftui.swift"; sourceTree = "<group>"; };
 		5C74AFCAA4B895A79C7CDB86 /* TransactionListInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionListInteractor.swift; sourceTree = "<group>"; };
+		D620BF892859D35A0051DB46 /* TransactionsDomainPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsDomainPlugin.swift; sourceTree = "<group>"; };
+		D620BF8B2859DAB10051DB46 /* GetWalletInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetWalletInformation.swift; sourceTree = "<group>"; };
+		D621D60E28940EA6002B603B /* EditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressView.swift; sourceTree = "<group>"; };
+		D621D61028941423002B603B /* EditAddressComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressComponent.swift; sourceTree = "<group>"; };
+		D621D61228941495002B603B /* EditAddressPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressPresenter.swift; sourceTree = "<group>"; };
 		D6493BC02858CEC50037F9A0 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		D6909DBB285493F3001B9A47 /* TransactionsFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsFilterView.swift; sourceTree = "<group>"; };
+		D69202542863106B00AE5AF3 /* AddToWatchlistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchlistButton.swift; sourceTree = "<group>"; };
+		D69202562863131800AE5AF3 /* WatchlistStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistStorage.swift; sourceTree = "<group>"; };
+		D692025828631BB200AE5AF3 /* AddToWatchlistComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchlistComponent.swift; sourceTree = "<group>"; };
+		D692025A28631BF900AE5AF3 /* AddToWatchlistPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchlistPresenter.swift; sourceTree = "<group>"; };
+		D692025C2863222900AE5AF3 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
+		D692025F2863239800AE5AF3 /* WatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistView.swift; sourceTree = "<group>"; };
+		D692026128634C8C00AE5AF3 /* WatchlistItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistItemView.swift; sourceTree = "<group>"; };
+		D6A2BA65288EA6C000FD35E1 /* WatchlistRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistRouter.swift; sourceTree = "<group>"; };
 		D6A8C44C284DF19A0044F87C /* ton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6A8C44F284DF19A0044F87C /* tonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tonApp.swift; sourceTree = "<group>"; };
 		D6A8C453284DF19C0044F87C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D6A8C456284DF19C0044F87C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D6AA34B8284E6BDF005EC78C /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		D6CBD82D2886D2FC005AC250 /* WatchlistPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistPresenter.swift; sourceTree = "<group>"; };
+		D6CBD82F2886D622005AC250 /* WatchlistComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistComponent.swift; sourceTree = "<group>"; };
 		D6E7A2EE2858DE3C004EA27F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D6E7A2F02858DEE3004EA27F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		D6E7CD302853845400EBB8C2 /* AddressInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressInfoView.swift; sourceTree = "<group>"; };
@@ -148,6 +180,7 @@
 				5C74A7569EF9DC1E2AA0325E /* APIService.swift */,
 				5C74AC4CF0484AAB8E7A5E0D /* TonService.swift */,
 				5C74A46DAF5181E14E97CC62 /* APIHeadersPlugin.swift */,
+				D620BF892859D35A0051DB46 /* TransactionsDomainPlugin.swift */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -159,6 +192,7 @@
 				5C74AADA7C6CE746FA233321 /* GetTransactions.swift */,
 				D6F59F7F2858A56F008BD120 /* TransactionID.swift */,
 				D6F59F812858A59F008BD120 /* Toncoin.swift */,
+				D620BF8B2859DAB10051DB46 /* GetWalletInformation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -179,6 +213,49 @@
 				D6F59F4528573ED3008BD120 /* Assets+swiftui.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D621D60D28940E91002B603B /* EditAddress */ = {
+			isa = PBXGroup;
+			children = (
+				D621D60E28940EA6002B603B /* EditAddressView.swift */,
+				D621D61028941423002B603B /* EditAddressComponent.swift */,
+				D621D61228941495002B603B /* EditAddressPresenter.swift */,
+			);
+			path = EditAddress;
+			sourceTree = "<group>";
+		};
+		D69202522863101200AE5AF3 /* Watchlist */ = {
+			isa = PBXGroup;
+			children = (
+				D621D60D28940E91002B603B /* EditAddress */,
+				D692025E2863238400AE5AF3 /* List */,
+				D69202532863103B00AE5AF3 /* Button */,
+			);
+			path = Watchlist;
+			sourceTree = "<group>";
+		};
+		D69202532863103B00AE5AF3 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				D69202542863106B00AE5AF3 /* AddToWatchlistButton.swift */,
+				D692025828631BB200AE5AF3 /* AddToWatchlistComponent.swift */,
+				D692025A28631BF900AE5AF3 /* AddToWatchlistPresenter.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		D692025E2863238400AE5AF3 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				D692025F2863239800AE5AF3 /* WatchlistView.swift */,
+				D692026128634C8C00AE5AF3 /* WatchlistItemView.swift */,
+				5C74A2928482FE2BD1AAEC45 /* WatchlistItemViewModel.swift */,
+				D6CBD82D2886D2FC005AC250 /* WatchlistPresenter.swift */,
+				D6CBD82F2886D622005AC250 /* WatchlistComponent.swift */,
+				D6A2BA65288EA6C000FD35E1 /* WatchlistRouter.swift */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 		D6A8C443284DF19A0044F87C = {
@@ -233,6 +310,7 @@
 			children = (
 				5C74A61D933FCDA2E8BBC4E7 /* APIService */,
 				D6F59F5B2857A9F5008BD120 /* ServiceLocator.swift */,
+				D69202562863131800AE5AF3 /* WatchlistStorage.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -242,6 +320,7 @@
 			children = (
 				D6AA34B8284E6BDF005EC78C /* Formatters.swift */,
 				5C74A9EA18EC90531E569596 /* Typealiases.swift */,
+				D692025C2863222900AE5AF3 /* UserDefault.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -363,6 +442,7 @@
 		D6F59F7128587B6C008BD120 /* Transaction */ = {
 			isa = PBXGroup;
 			children = (
+				D69202522863101200AE5AF3 /* Watchlist */,
 				D6F59F7228587B78008BD120 /* Detail */,
 				D6F59F652857BC4B008BD120 /* List */,
 			);
@@ -479,12 +559,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6A8C450284DF19A0044F87C /* tonApp.swift in Sources */,
+				D621D61328941495002B603B /* EditAddressPresenter.swift in Sources */,
 				D6F59F4128573A2A008BD120 /* Assets.swift in Sources */,
 				D6F59F7E28589F18008BD120 /* ListState.swift in Sources */,
+				D620BF8C2859DAB10051DB46 /* GetWalletInformation.swift in Sources */,
 				5C74A5DBB74AAE7B25553085 /* GetAddressInfo.swift in Sources */,
 				D6F59F4628573ED3008BD120 /* Assets+swiftui.swift in Sources */,
 				D6F59F5E2857B13F008BD120 /* InputAddressRouter.swift in Sources */,
 				5C74A4CBD3B0DDC84A5011C7 /* GetTransactions.swift in Sources */,
+				D621D61128941423002B603B /* EditAddressComponent.swift in Sources */,
+				D69202572863131800AE5AF3 /* WatchlistStorage.swift in Sources */,
 				D6F59F5C2857A9F5008BD120 /* ServiceLocator.swift in Sources */,
 				5C74AB50B7B934A77F7E960F /* APIService.swift in Sources */,
 				D6F59F7528587C35008BD120 /* AddressDetailItemView.swift in Sources */,
@@ -495,7 +579,10 @@
 				D6AA34B9284E6BDF005EC78C /* Formatters.swift in Sources */,
 				5C74A06D95890CD7952EE481 /* View+extensions.swift in Sources */,
 				D6F59F6A2857BD1A008BD120 /* TransactionMapper.swift in Sources */,
+				D6CBD8302886D622005AC250 /* WatchlistComponent.swift in Sources */,
+				D692026228634C8C00AE5AF3 /* WatchlistItemView.swift in Sources */,
 				5C74A3156DF9A84A154CFF0A /* Typealiases.swift in Sources */,
+				D69202602863239800AE5AF3 /* WatchlistView.swift in Sources */,
 				D6F59F532857A40B008BD120 /* L10n.swift in Sources */,
 				D6F59F672857BC74008BD120 /* TransactionListComponent.swift in Sources */,
 				D6F59F622857B92F008BD120 /* InputAddressPresenter.swift in Sources */,
@@ -504,25 +591,34 @@
 				D6F59F572857A8D8008BD120 /* InputAddressComponent.swift in Sources */,
 				D6F59F7028587558008BD120 /* AddressInfoViewModel.swift in Sources */,
 				D6F59F602857B915008BD120 /* InputAddressError.swift in Sources */,
+				D692025D2863222900AE5AF3 /* UserDefault.swift in Sources */,
 				5C74A6DEEA4890118DD530FA /* MessageView.swift in Sources */,
 				D6F59F822858A59F008BD120 /* Toncoin.swift in Sources */,
 				5C74A79958426B6A104DCA1C /* TransactionsListView.swift in Sources */,
 				D6F59F5A2857A9D9008BD120 /* Component.swift in Sources */,
 				D6F59F7A285882B4008BD120 /* MessageComponent.swift in Sources */,
+				D69202552863106B00AE5AF3 /* AddToWatchlistButton.swift in Sources */,
+				D620BF8A2859D35A0051DB46 /* TransactionsDomainPlugin.swift in Sources */,
 				5C74A3A89C74CF340820D46C /* TransactionListItemViewModel.swift in Sources */,
 				D6F59F7828587E1B008BD120 /* AddressDetailItemViewModel.swift in Sources */,
 				5C74A40C5B7683EA69652798 /* TransactionListItemView.swift in Sources */,
 				D6F59F802858A56F008BD120 /* TransactionID.swift in Sources */,
 				D6E7CD312853845500EBB8C2 /* AddressInfoView.swift in Sources */,
+				D6A2BA66288EA6C000FD35E1 /* WatchlistRouter.swift in Sources */,
 				D6909DBC285493F3001B9A47 /* TransactionsFilterView.swift in Sources */,
 				5C74A8D90D1C048396C02EB5 /* TransactionListPresenter.swift in Sources */,
 				D6F59F7C285882DE008BD120 /* MessageRouter.swift in Sources */,
+				D6CBD82E2886D2FC005AC250 /* WatchlistPresenter.swift in Sources */,
 				D6F59F3B28551702008BD120 /* InputAddressView.swift in Sources */,
 				5C74A672EA7B5AB0BD25E2FC /* TransactionDetailsView.swift in Sources */,
 				5C74A8EEF25CEF70D7C78F5F /* TransactionDetailsViewModel.swift in Sources */,
+				D621D60F28940EA6002B603B /* EditAddressView.swift in Sources */,
+				D692025928631BB200AE5AF3 /* AddToWatchlistComponent.swift in Sources */,
 				5C74A624E6D1316FAD9A8240 /* APIHeadersPlugin.swift in Sources */,
 				5C74ACA21CDBC39299FC0F22 /* Fonts+swiftui.swift in Sources */,
 				5C74A068E7F6180F4E881881 /* TransactionListInteractor.swift in Sources */,
+				D692025B28631BF900AE5AF3 /* AddToWatchlistPresenter.swift in Sources */,
+				5C74A4E37771B1DC816E4127 /* WatchlistItemViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

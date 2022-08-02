@@ -14,10 +14,25 @@ public enum L10n {
   public enum Common {
     /// Apply
     public static let apply = L10n.tr("Localizable", "Common.Apply")
+    /// Copy
+    public static let copy = L10n.tr("Localizable", "Common.Copy")
     /// Error
     public static let error = L10n.tr("Localizable", "Common.Error")
+    /// Remove
+    public static let remove = L10n.tr("Localizable", "Common.Remove")
     /// Reset
     public static let reset = L10n.tr("Localizable", "Common.Reset")
+    /// Save
+    public static let save = L10n.tr("Localizable", "Common.Save")
+  }
+
+  public enum Edit {
+    /// Address
+    public static let fullAddress = L10n.tr("Localizable", "Edit.fullAddress")
+    /// Enter short name
+    public static let placeholder = L10n.tr("Localizable", "Edit.placeholder")
+    /// Set short name
+    public static let title = L10n.tr("Localizable", "Edit.title")
   }
 
   public enum InputAddress {
@@ -54,6 +69,17 @@ public enum L10n {
     public static let source = L10n.tr("Localizable", "Message.source")
     /// Value
     public static let value = L10n.tr("Localizable", "Message.value")
+  }
+
+  public enum Tab {
+    public enum Search {
+      /// Search
+      public static let title = L10n.tr("Localizable", "Tab.Search.title")
+    }
+    public enum Watchlist {
+      /// Watchlist
+      public static let title = L10n.tr("Localizable", "Tab.Watchlist.title")
+    }
   }
 
   public enum Transaction {
@@ -99,6 +125,15 @@ public enum L10n {
       /// Transactions
       public static let title = L10n.tr("Localizable", "Transaction.List.title")
     }
+  }
+
+  public enum Watchlist {
+    /// Copy full address
+    public static let copyFullAddress = L10n.tr("Localizable", "Watchlist.copyFullAddress")
+    /// Edit
+    public static let editShortName = L10n.tr("Localizable", "Watchlist.editShortName")
+    /// Watchlist
+    public static let title = L10n.tr("Localizable", "Watchlist.title")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

@@ -12,9 +12,9 @@ class TransactionListInteractor {
     
     private(set) var rawItems: [GetTransactionsResponse.Result] = []
     
-    let address: String
+    let address: TONAddress
     
-    init(address: String, service: TonService) {
+    init(address: TONAddress, service: TonService) {
         self.address = address
         self.service = service
     }
@@ -38,8 +38,8 @@ class TransactionListInteractor {
         return items
     }
 
-    func information() async throws -> GetAddressInfoResponse {
-        let info = try await self.service.fetchAddressInformation(self.address)
+    func information() async throws -> GetWalletInformationResponse {
+        let info = try await self.service.fetchWalletInformation(self.address)
         self.lastTransaction = info.result.lastTransactionID
         return info
     }

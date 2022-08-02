@@ -9,11 +9,12 @@ final class TonService {
     private let provider = MoyaProvider<APIService>(
             plugins: [
 //                NetworkLoggerPlugin(configuration: .init(logOptions: .verbose)),
-                APIHeadersPlugin()
+                APIHeadersPlugin(),
+                TransactionsDomainPlugin()
             ]
     )
     
-    func fetchTransactions(address: String, from transaction: TransactionID? = nil) async throws -> [GetTransactionsResponse.Result] {
+    func fetchTransactions(address: TONAddress, from transaction: TransactionID? = nil) async throws -> [GetTransactionsResponse.Result] {
         let logicalTime: Int? = transaction.map({ Int($0.lt) ?? 0 })
         let request = GetTransactionRequest(
                 address: address,
@@ -26,7 +27,12 @@ final class TonService {
         return response.result
     }
 
-    func fetchAddressInformation(_ address: String) async throws  -> GetAddressInfoResponse {
+    func fetchWalletInformation(_ address: TONAddress) async throws  -> GetWalletInformationResponse {
+        let endpoint = APIService.getWalletInformation(address: address)
+        return try await self.request(endpoint)
+    }
+        
+    func fetchAddressInformation(_ address: TONAddress) async throws  -> GetAddressInfoResponse {
         let endpoint = APIService.getAddressInformation(address: address)
         return try await self.request(endpoint)
     }

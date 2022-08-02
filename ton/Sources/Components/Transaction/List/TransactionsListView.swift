@@ -10,9 +10,9 @@ import SwiftUI
 struct TransactionListView: View {
     enum ErrorType {
         // TODO: add retry here
-        case address(String)
-        case initial(String)
-        case nextPage(String)
+        case address(String, retry: VoidClosure)
+        case initial(String, retry: VoidClosure)
+        case nextPage(String, retry: VoidClosure)
     }
     
     let initialLoading: Bool
@@ -40,22 +40,22 @@ struct TransactionListView: View {
                 }
 
                 if let error = self.error,
-                   case ErrorType.initial(let text) = error {
+                   case ErrorType.initial(let text, let retry) = error {
                     ErrorView(
                         title: L10n.Common.error,
                         description: text,
-                        retry: { self.onAppear() }
+                        retry: { retry() }
                     )
                 }
                 else {
                     ForEach(self.items, content: TransactionListItemView.init)
                 }
                 
-                if let error = self.error, case ErrorType.nextPage(let text) = error {
+                if let error = self.error, case ErrorType.nextPage(let text, let retry) = error {
                     ErrorView(
                         title: L10n.Common.error,
                         description: text,
-                        retry: { self.onShowLastElement() }
+                        retry: { retry() }
                     )
                 }
                 
@@ -92,7 +92,7 @@ struct ContentView_Previews: PreviewProvider {
                 items: [],
                 hasNextPage: false,
                 loadingNextPage: true,
-                error: .initial("Transaction list is not available now, please retry or come back later"),
+                error: .initial("Transaction list is not available now, please retry or come back later", retry: {}),
                 onAppear: {},
                 onShowLastElement: {}
             )

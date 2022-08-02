@@ -1,14 +1,43 @@
 import Foundation
 
+
+struct TONAddress: Hashable, Codable {
+    
+    private let value: String
+
+    var isEmpty: Bool {
+        self.value.isEmpty
+    }
+    
+    init(from decoder: Decoder) throws {
+        self.value = try decoder.singleValueContainer().decode(String.self)
+    }
+    
+    func encode(to coder: Encoder) throws {
+        var container = coder.singleValueContainer()
+        try container.encode(self.value)
+    }
+}
+
+extension TONAddress: ExpressibleByStringLiteral, CustomStringConvertible {
+    init(stringLiteral value: String) {
+        self.value = value
+    }
+    
+    var description: String {
+        self.value
+    }
+}
+
 struct GetTransactionRequest: Encodable {
-    let address: String
+    let address: TONAddress
     let limit: Int
     let lt: Int?
     let hash: String?
     let toLt: Int?
     let archival: Bool
 
-    init(address: String, limit: Int, lt: Int? = nil, hash: String? = nil, toLt: Int? = nil, archival: Bool = false) {
+    init(address: TONAddress, limit: Int, lt: Int? = nil, hash: String? = nil, toLt: Int? = nil, archival: Bool = false) {
         self.address = address
         self.limit = limit
         self.lt = lt
@@ -93,3 +122,45 @@ struct GetTransactionsResponse: Codable {
         case rawTransaction = "raw.transaction"
     }
 }
+
+//public struct ElementID<Element>: Hashable, Decodable, Equatable {
+//
+//    public let value: String
+//
+//    public var asInt: Int {
+//        Int(self.value) ?? unknownElementID
+//    }
+//
+//    enum CodingKeys: String, CodingKey {
+//        case data
+//    }
+//
+//    enum NestedCodingKeys: String, CodingKey {
+//        case id
+//    }
+//
+//    public init(from decoder: Decoder) throws {
+//        if let value = try? decoder.singleValueContainer().decode(String.self) {
+//            self.value = value
+//        }
+//        else if let value = try? decoder.singleValueContainer().decode(Int.self) {
+//            self.value = String(value)
+//        }
+//        else if let container = try? decoder.container(keyedBy: CodingKeys.self),
+//                let nestedContainer = try? container.nestedContainer(keyedBy: NestedCodingKeys.self, forKey: .data) {
+//            self.value = try nestedContainer.decode(String.self, forKey: .id)
+//        }
+//        else {
+//            let container = try decoder.container(keyedBy: NestedCodingKeys.self)
+//            self.value = try container.decode(String.self, forKey: .id)
+//        }
+//    }
+//
+//    public init(value: String) {
+//        self.value = value
+//    }
+//
+//    public init(value: Int) {
+//        self.value = "\(value)"
+//    }
+//}

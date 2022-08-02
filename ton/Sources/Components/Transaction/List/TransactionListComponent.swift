@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TransactionListComponent: Component {
     @StateObject var presenter: TransactionListPresenter = TransactionListPresenter()
-    let address: String
+    let address: TONAddress
     
     @ViewBuilder
     func assemble(_ serviceLocator: ServiceLocator) -> some View {
@@ -17,19 +17,6 @@ struct TransactionListComponent: Component {
             let interactor = TransactionListInteractor(address: self.address, service: serviceLocator.tonService)
             let _ = self.presenter.initialize(address: self.address, interactor: interactor)
         }
-        
-        let error: TransactionListView.ErrorType? = {
-            switch self.presenter.listState {
-            case .initialLoadingError:
-                return .initial("Transaction list is not available now, please retry or come back later")
-                
-            case .loadNextPageError:
-                return .nextPage("Error while loading next page, please try later")
-                
-            default: return nil
-            }
-            
-        }()
         
         ZStack {
             TransactionListView(
@@ -39,7 +26,7 @@ struct TransactionListComponent: Component {
                 items: self.presenter.listState.elements,
                 hasNextPage: self.presenter.listState.hasNextPage,
                 loadingNextPage: self.presenter.listState.loadingNextPage,
-                error: error,
+                error: self.presenter.errorLoading,
                 onAppear: self.presenter.onAppear,
                 onShowLastElement: self.presenter.loadNextPage
             )

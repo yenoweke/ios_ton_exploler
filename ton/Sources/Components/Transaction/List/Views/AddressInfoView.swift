@@ -12,11 +12,17 @@ struct AddressInfoView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(self.vm.address)
-                .font(AppFont.regular.textStyle(.title3))
-                .contextCopy(text: self.vm.address)
-                .unredacted()
-
+            HStack {
+                Text(self.vm.address.description)
+                    .font(AppFont.regular.textStyle(.title3))
+                    .contextCopy(text: self.vm.address.description)
+                    .unredacted()
+                
+                Spacer()
+                
+                AddToWatchlistComponent(address: self.vm.address)
+            }
+            
             HStack {
                 VStack(alignment: .leading) {
                     Text(L10n.Transaction.List.addressBalance)
@@ -51,5 +57,6 @@ struct AddressInfoView_Previews: PreviewProvider {
                 state: "active"
             )
         )
+        .environmentObject(ServiceLocator())
     }
 }

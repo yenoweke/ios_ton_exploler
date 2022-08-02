@@ -1,6 +1,12 @@
 "Common.Apply" = "Apply";
 "Common.Reset" = "Reset";
 "Common.Error" = "Error";
+"Common.Copy" = "Copy";
+"Common.Remove" = "Remove";
+"Common.Save" = "Save";
+
+"Tab.Search.title" = "Search";
+"Tab.Watchlist.title" = "Watchlist";
 
 "InputAddress.Go" = "Go";
 "InputAddress.Input" = "Enter TON Address";
@@ -37,3 +43,11 @@
 "Transaction.Filter.all" = "All";
 "Transaction.Filter.onlyIn" = "Only IN";
 "Transaction.Filter.onlyOut" = "Only OUT";
+
+"Watchlist.title" = "Watchlist";
+"Watchlist.copyFullAddress" = "Copy full address";
+"Watchlist.editShortName" = "Edit";
+
+"Edit.title" = "Set short name";
+"Edit.placeholder" = "Enter short name";
+"Edit.fullAddress" = "Address";

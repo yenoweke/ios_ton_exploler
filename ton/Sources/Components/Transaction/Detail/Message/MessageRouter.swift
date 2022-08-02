@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessageRouter: View {
-    @Binding var selectedAddress: String?
+    @Binding var selectedAddress: TONAddress?
     
     var body: some View {
         NavigationLink(

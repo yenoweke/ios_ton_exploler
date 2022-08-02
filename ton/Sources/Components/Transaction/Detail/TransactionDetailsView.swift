@@ -39,6 +39,7 @@ struct TransactionDetailsView: View {
                 
                 ForEach(self.vm.messageItems, id: \.self) { item in
                     MessageComponent(vm: item)
+                        .id(item)
                 }
             }
             .padding(.horizontal)

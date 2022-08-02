@@ -1,6 +1,12 @@
 "Common.Apply" = "Применить";
 "Common.Reset" = "Сбросить";
 "Common.Error" = "Ошибка";
+"Common.Copy" = "Скопировать";
+"Common.Remove" = "Удалить";
+"Common.Save" = "Сохранить";
+
+"Tab.Search.title" = "Поиск";
+"Tab.Watchlist.title" = "Избранное";
 
 "InputAddress.Go" = "Показать";
 "InputAddress.Input" = "Введите TON Адрес";
@@ -37,3 +43,11 @@
 "Transaction.Filter.all" = "Все";
 "Transaction.Filter.onlyIn" = "Только входящие";
 "Transaction.Filter.onlyOut" = "Только исходящие";
+
+"Watchlist.title" = "Избранное";
+"Watchlist.copyFullAddress" = "Скопировать полный адрес";
+"Watchlist.editShortName" = "Редактировать";
+
+"Edit.title" = "Установить короткое имя для адреса";
+"Edit.placeholder" = "Введите короткое имя";
+"Edit.fullAddress" = "Адрес";

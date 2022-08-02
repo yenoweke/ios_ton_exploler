@@ -7,7 +7,7 @@ import SwiftUI
 extension View {
     func contextCopy(text: String) -> some View {
         self.contextMenu(menuItems: {
-            Button("Скопировать", action: {
+            Button(L10n.Common.copy, action: {
                 UIPasteboard.general.string = text
             })
         })

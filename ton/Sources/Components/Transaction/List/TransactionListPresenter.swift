@@ -15,13 +15,14 @@ class TransactionListPresenter: ObservableObject {
     @MainActor @Published var loadingAddressInfo = false
     @MainActor @Published var addressInfo = AddressInfoViewModel(address: "", balance: "", state: "")
     @MainActor @Published var showFilter: Bool = false
-    
+    @MainActor @Published var errorLoading: TransactionListView.ErrorType? = nil
+
     private var filter: TransactionsFilter?
     
     private(set) var initialized = false
     
     @MainActor
-    func initialize(address: String, interactor: TransactionListInteractor) {
+    func initialize(address: TONAddress, interactor: TransactionListInteractor) {
         if self.initialized { return }
         self.interactor = interactor
         self.initialized = true
@@ -38,7 +39,7 @@ class TransactionListPresenter: ObservableObject {
     
     @MainActor
     func loadNextPage() {
-        guard self.listState.hasNextPage else { return }
+        guard self.listState.hasNextPage || self.listState.isLoadingNextPageError else { return }
         if self.listState.loadingNextPage { return }
         self.loadNextTransactions()
     }
@@ -64,7 +65,12 @@ private extension TransactionListPresenter {
     func loadAddressInfo() {
         self.loadingAddressInfo = true
         Task.detached {
-            guard let response = try? await self.interactor.information() else { return }
+            await self.loadInitialTransactions()
+            guard let response = try? await self.interactor.information() else {
+                // TODO: handle error, add retry
+                await MainActor.run(body: { self.loadingAddressInfo = false })
+                return
+            }
             let vm = AddressInfoViewModel(address: self.interactor.address, response: response.result)
             await MainActor.run {
                 self.addressInfo = vm
@@ -85,6 +91,7 @@ private extension TransactionListPresenter {
             catch {
                 await MainActor.run {
                     self.listState.initiallLoadError(error)
+                    self.updateErrorIfNeeded()
                 }
             }
         }
@@ -92,7 +99,6 @@ private extension TransactionListPresenter {
     
     @MainActor
     func loadNextTransactions()  {
-        guard self.listState.hasNextPage else { return }
         self.listState.nextPageLoading()
         
         Task.detached {
@@ -103,6 +109,7 @@ private extension TransactionListPresenter {
             catch {
                 await MainActor.run(body: {
                     self.listState.nextPageLoadingError(error)
+                    self.updateErrorIfNeeded()
                 })
             }
         }
@@ -121,5 +128,26 @@ private extension TransactionListPresenter {
                 self.listState.nextPageLoaded(items, hasNextPage: !result.isEmpty)
             }
         })
+    }
+    
+    @MainActor
+    func updateErrorIfNeeded() {
+        self.errorLoading = {
+            switch self.listState {
+            case .initialLoadingError:
+                return .initial("Transaction list is not available now, please retry or come back later", retry: { [weak self] in
+                    self?.errorLoading = nil
+                    self?.loadInitialTransactions()
+                })
+                
+            case .loadNextPageError:
+                return .nextPage("Error while loading next page, please try later", retry: { [weak self] in
+                    self?.errorLoading = nil
+                    self?.loadNextPage()
+                })
+                
+            default: return nil
+            }
+        }()
     }
 }

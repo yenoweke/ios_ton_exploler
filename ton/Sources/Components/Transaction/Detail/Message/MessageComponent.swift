@@ -9,13 +9,13 @@ import SwiftUI
 
 struct MessageComponent: Component {
     
-    @State var selectedAddress: String?
+    @State var selectedAddress: TONAddress?
     let vm: MessageViewModel
     
     @ViewBuilder
     func assemble(_ serviceLocator: ServiceLocator) -> some View {
         let router = MessageRouter(selectedAddress: self.$selectedAddress)
-        let view = MessageView(vm: self.vm, onTapAddress: { self.selectedAddress = $0 })
+        let view = MessageView(vm: self.vm, onTapAddress: { self.selectedAddress = TONAddress(stringLiteral: $0) })
         
         ZStack {
             router

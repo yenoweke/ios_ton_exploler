@@ -8,19 +8,19 @@
 import Foundation
 
 struct AddressInfoViewModel {
-    let address: String
+    let address: TONAddress
     let balance: String
     let state: String
 
-    init(address: String, balance: String, state: String) {
+    init(address: TONAddress, balance: String, state: String) {
         self.address = address
         self.balance = balance
         self.state = state
     }
 
-    init(address: String, response: GetAddressInfoResponse.Result) {
+    init(address: TONAddress, response: GetWalletInformationResponse.Result) {
         self.address = address
         self.balance = Formatters.ton.formatSignificant(response.balance)
-        self.state = response.state
+        self.state = response.accountState
     }
 }

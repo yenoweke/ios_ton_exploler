@@ -17,7 +17,7 @@ struct InputAddressRouter: View {
         NavigationLink(
             isActive: self.$showTransactions,
             destination: {
-                TransactionListComponent(address: self.address)
+                TransactionListComponent(address: .init(stringLiteral: self.address))
                     .navigationTitle("Ton Exploler")
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationBarHidden(false)

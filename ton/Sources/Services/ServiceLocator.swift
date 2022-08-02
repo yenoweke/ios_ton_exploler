@@ -9,5 +9,6 @@ import Foundation
 
 class ServiceLocator: ObservableObject {
     let tonService = TonService()
+    let watchlistStorage = WatchlistStorage()
 }
 

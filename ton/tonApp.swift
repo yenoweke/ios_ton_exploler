@@ -14,8 +14,20 @@ struct tonApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                InputAddressComponent()
+            TabView {
+                NavigationView {
+                    InputAddressComponent()
+                }
+                .tabItem {
+                    Label(L10n.Tab.Search.title, systemImage: "magnifyingglass.circle")
+                }
+                
+                NavigationView {
+                    WatchlistComponent()
+                }
+                .tabItem {
+                    Label(L10n.Tab.Watchlist.title, systemImage: "star")
+                }
             }
             .environmentObject(self.serviceLocator)
         }
