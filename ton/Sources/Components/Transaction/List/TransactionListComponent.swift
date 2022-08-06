@@ -15,7 +15,7 @@ struct TransactionListComponent: Component {
     func assemble(_ serviceLocator: ServiceLocator) -> some View {
         if presenter.initialized == false {
             let interactor = TransactionListInteractor(address: self.address, service: serviceLocator.tonService)
-            let _ = self.presenter.initialize(address: self.address, interactor: interactor)
+            let _ = self.presenter.initialize(address: self.address, interactor: interactor, knownNames: serviceLocator.knownNamesStorage)
         }
         
         ZStack {

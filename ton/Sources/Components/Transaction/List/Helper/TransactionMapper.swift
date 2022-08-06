@@ -11,7 +11,8 @@ struct TransactionsMapper {
     static func map(
         _ items: [GetTransactionsResponse.Result],
         onTap: @escaping @MainActor (GetTransactionsResponse.Result) -> Void,
-        filter: TransactionsFilter?
+        filter: TransactionsFilter?,
+        knownNames: KnownNamesStorage
     ) -> [TransactionListItemViewModel] {
         items.reduce(into: [TransactionListItemViewModel](), { partialResult, res in
             let onTap: @MainActor () -> Void = {
@@ -23,12 +24,12 @@ struct TransactionsMapper {
                 
                 if let filter = filter {
                     if self.isAmountInRange(msg.value.decimal, minValue: filter.minValue, maxValue: filter.maxValue) {
-                        return TransactionListItemViewModel(msg: msg, incoming: false, utime: res.utime, onTap: onTap)
+                        return TransactionListItemViewModel(msg: msg, incoming: false, utime: res.utime, knownNames: knownNames, onTap: onTap)
                     }
                     return nil
                 }
                 else {
-                    return TransactionListItemViewModel(msg: msg, incoming: false, utime: res.utime, onTap: onTap)
+                    return TransactionListItemViewModel(msg: msg, incoming: false, utime: res.utime, knownNames: knownNames, onTap: onTap)
                 }
             }
             
@@ -39,12 +40,12 @@ struct TransactionsMapper {
             
             if let filter = filter {
                 if self.isAmountInRange(res.inMsg.value.decimal, minValue: filter.minValue, maxValue: filter.maxValue) {
-                    let inMsg = TransactionListItemViewModel(msg: res.inMsg, incoming: true, utime: res.utime, onTap: onTap)
+                    let inMsg = TransactionListItemViewModel(msg: res.inMsg, incoming: true, utime: res.utime, knownNames: knownNames, onTap: onTap)
                     partialResult.append(inMsg)
                 }
             }
             else {
-                let inMsg = TransactionListItemViewModel(msg: res.inMsg, incoming: true, utime: res.utime, onTap: onTap)
+                let inMsg = TransactionListItemViewModel(msg: res.inMsg, incoming: true, utime: res.utime, knownNames: knownNames, onTap: onTap)
                 partialResult.append(inMsg)
             }
         })

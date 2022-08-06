@@ -20,6 +20,7 @@
 		5C74A672EA7B5AB0BD25E2FC /* TransactionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A709933C46294E9AE63A /* TransactionDetailsView.swift */; };
 		5C74A6DEEA4890118DD530FA /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74AD03E5A6BBDEC3A69648 /* MessageView.swift */; };
 		5C74A79958426B6A104DCA1C /* TransactionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A728269B29F2AF6012E0 /* TransactionsListView.swift */; };
+		5C74A81682F07CFF050D5EE8 /* KnownNamesStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A7309D86D70BC6534EDD /* KnownNamesStorage.swift */; };
 		5C74A8D90D1C048396C02EB5 /* TransactionListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A8CFCFE68A4B78E93250 /* TransactionListPresenter.swift */; };
 		5C74A8EEF25CEF70D7C78F5F /* TransactionDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A97F0EA22209DEE24AAB /* TransactionDetailsViewModel.swift */; };
 		5C74AB50B7B934A77F7E960F /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C74A7569EF9DC1E2AA0325E /* APIService.swift */; };
@@ -84,6 +85,7 @@
 		5C74A65C879BD4A4E359B143 /* View+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+extensions.swift"; sourceTree = "<group>"; };
 		5C74A709933C46294E9AE63A /* TransactionDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailsView.swift; sourceTree = "<group>"; };
 		5C74A728269B29F2AF6012E0 /* TransactionsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsListView.swift; sourceTree = "<group>"; };
+		5C74A7309D86D70BC6534EDD /* KnownNamesStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KnownNamesStorage.swift; sourceTree = "<group>"; };
 		5C74A7569EF9DC1E2AA0325E /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		5C74A8652D9D44807C32E7F8 /* GetAddressInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAddressInfo.swift; sourceTree = "<group>"; };
 		5C74A8CFCFE68A4B78E93250 /* TransactionListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionListPresenter.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				5C74A61D933FCDA2E8BBC4E7 /* APIService */,
 				D6F59F5B2857A9F5008BD120 /* ServiceLocator.swift */,
 				D69202562863131800AE5AF3 /* WatchlistStorage.swift */,
+				5C74A7309D86D70BC6534EDD /* KnownNamesStorage.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				5C74A068E7F6180F4E881881 /* TransactionListInteractor.swift in Sources */,
 				D692025B28631BF900AE5AF3 /* AddToWatchlistPresenter.swift in Sources */,
 				5C74A4E37771B1DC816E4127 /* WatchlistItemViewModel.swift in Sources */,
+				5C74A81682F07CFF050D5EE8 /* KnownNamesStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

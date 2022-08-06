@@ -33,7 +33,7 @@ struct TransactionListItemView: View {
                     .font(.callout)
                 
                 Text(vm.address)
-                    .frame(maxWidth: 72.0)
+                    .frame(minWidth: 72.0, maxWidth: 108.0)
                     .lineLimit(1)
                     .multilineTextAlignment(.center)
                     .truncationMode(.middle)

@@ -9,7 +9,8 @@ import Foundation
 
 class TransactionListPresenter: ObservableObject {
     private var interactor: TransactionListInteractor! // TODO: find better way to implement injection
-    
+    private var knownNames: KnownNamesStorage!
+
     @MainActor @Published var listState = ListState<TransactionListItemViewModel>.idle
     @MainActor @Published var selected: GetTransactionsResponse.Result?
     @MainActor @Published var loadingAddressInfo = false
@@ -18,13 +19,14 @@ class TransactionListPresenter: ObservableObject {
     @MainActor @Published var errorLoading: TransactionListView.ErrorType? = nil
 
     private var filter: TransactionsFilter?
-    
+
     private(set) var initialized = false
     
     @MainActor
-    func initialize(address: TONAddress, interactor: TransactionListInteractor) {
+    func initialize(address: TONAddress, interactor: TransactionListInteractor, knownNames: KnownNamesStorage) {
         if self.initialized { return }
         self.interactor = interactor
+        self.knownNames = knownNames
         self.initialized = true
         self.addressInfo = AddressInfoViewModel(address: address, balance: "BALANCE", state: "State")
     }
@@ -119,7 +121,7 @@ private extension TransactionListPresenter {
         let onTap: @MainActor (GetTransactionsResponse.Result) -> Void = { item in
             self.selected = item
         }
-        let items = TransactionsMapper.map(result, onTap: onTap, filter: self.filter)
+        let items = TransactionsMapper.map(result, onTap: onTap, filter: self.filter, knownNames: self.knownNames)
         await MainActor.run(body: {
             if initial {
                 self.listState.initiallyLoaded(items, hasNextPage: !result.isEmpty)

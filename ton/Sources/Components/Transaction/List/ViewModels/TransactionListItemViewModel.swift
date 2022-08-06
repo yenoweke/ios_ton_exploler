@@ -19,7 +19,7 @@ struct TransactionListItemViewModel: Identifiable {
     let onTap: @MainActor () -> Void
     let amountDecimal: Decimal
     
-    init(msg: GetTransactionsResponse.Msg, incoming: Bool, utime: Date, onTap: @escaping @MainActor () -> Void) {
+    init(msg: GetTransactionsResponse.Msg, incoming: Bool, utime: Date, knownNames: KnownNamesStorage, onTap: @escaping @MainActor () -> Void) {
         self.id = msg.bodyHash + "_" + msg.createdLt + "_" + msg.source + "_" + msg.destination
         self.incoming = incoming
         self.direction = incoming ? L10n.Message.in : L10n.Message.out
@@ -34,7 +34,7 @@ struct TransactionListItemViewModel: Identifiable {
         }
         self.amountDecimal = msg.value.decimal
 
-        self.address = msg.destination
+        self.address = knownNames.name(for: msg.destination) ?? msg.destination
         self.message = msg.message
         self.onTap = onTap
     }

@@ -8,7 +8,8 @@
 import Foundation
 
 final class WatchlistStorage: ObservableObject {
-    
+
+    private let knownNamesStorage: KnownNamesStorage
     @UserDefault(.watchlist, defaultValue: [])
     private var storage: [String] {
         didSet {
@@ -26,7 +27,8 @@ final class WatchlistStorage: ObservableObject {
     @Published private(set) var addresses: [String] = []
     @Published private(set) var shortNames: [String: String] = [:]
     
-    init() {
+    init(knownNamesStorage: KnownNamesStorage) {
+        self.knownNamesStorage = knownNamesStorage
         self.addresses = self.storage
         self.shortNames = self.shortNameByAddress
     }
@@ -46,7 +48,10 @@ final class WatchlistStorage: ObservableObject {
     }
     
     func shortName(for address: String) -> String {
-        self.shortNames[address, default: address.prefix(4) + "..." + address.suffix(4) ]
+        if let name = self.knownNamesStorage.name(for: address) {
+            return name
+        }
+        return self.shortNames[address, default: address.prefix(4) + "..." + address.suffix(4) ]
     }
     
     func set(shortName: String, for address: String) {
