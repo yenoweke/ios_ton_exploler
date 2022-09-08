@@ -1,0 +1,33 @@
+import SwiftUI
+
+final class {{ name }}ModuleContainer: ModuleContainer  {
+    private struct ContainerView: View {
+        @ObservedObject var state: {{ name }}ViewState
+        let interactor: {{ name }}InteractorInput
+
+        var body: some View {
+            {{ name }}View()
+        }
+    }
+
+    static func assemble(_ dependencies: {{ name }}Dependencies) -> {{ name }}ModuleContainer {
+        let (view, router) = Self.assembleView(dependencies: dependencies)
+        let viewController = HostingViewController(rootView: view)
+
+        router.navigationControllerProvider = { [weak viewController] in
+            viewController?.navigationController
+        }
+        router.presentingViewControllerProvider = { [weak viewController] in
+            viewController
+        }
+        return {{ name }}ModuleContainer(viewControllerToShow: viewController, router: router)
+    }
+
+    static func assembleView(dependencies: {{ name }}Dependencies) -> (view: ContainerView, router: BaseRouter) {
+        let state = {{ name }}ViewState()
+        let router = {{ name }}Router(dependencies: dependencies)
+        let interactor = {{ name }}Interactor(output: state, router: router)
+        let view = ContainerView(state: state, interactor: interactor)
+        return (view, router)
+    }
+}

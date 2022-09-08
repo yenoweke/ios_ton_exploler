@@ -1,0 +1,54 @@
+"Common.Apply" = "Применить";
+"Common.Reset" = "Сбросить";
+"Common.Error" = "Ошибка";
+"Common.Copy" = "Скопировать";
+"Common.Remove" = "Удалить";
+"Common.Save" = "Сохранить";
+"Common.Retry" = "Повторить";
+
+"Tab.Search.title" = "Поиск";
+"Tab.Watchlist.title" = "Избранное";
+
+"InputAddress.Go" = "Показать";
+"InputAddress.Input" = "Введите TON Адрес";
+"InputAddress.Error.isNotValid" = "Адрес введён неверно";
+
+"Transaction.List.title" = "Транзакции";
+"Transaction.List.addressBalance" = "Баланс:";
+
+"Transaction.Details.title" = "Информация о транзакции";
+"Transaction.Details.logicalTime" = "Logical time:";
+"Transaction.Details.timeStamp" = "TimeStamp";
+"Transaction.Details.totalFee" = "Total fee:";
+"Transaction.Details.storageFee" = "Storage fee:";
+"Transaction.Details.otherFee" = "Other fee:";
+"Transaction.Details.messages" = "Сообщения:";
+"Transaction.Details.messagesInfo" = "%@ вход., %@ исх.";
+
+"Message.empty" = "Пусто";
+"Message.in" = "Вход.:";
+"Message.out" = "Исх.:";
+"Message.source" = "Адрес источника";
+"Message.destination" = "Адрес назначения";
+"Message.value" = "Значение";
+"Message.forwardFee" = "Forward fee";
+"Message.ihrFee" = "IHR fee";
+"Message.creationLT" = "Creation LT";
+"Message.bodyHash" = "Body hash";
+"Message.message" = "Комментарий (memo)";
+
+"Transaction.Filter.title" = "Фильтр транзакций";
+"Transaction.Filter.messageTypes" = "Типы сообщений";
+"Transaction.Filter.minValue" = "Мин значение";
+"Transaction.Filter.maxValue" = "Макс значение";
+"Transaction.Filter.all" = "Все";
+"Transaction.Filter.onlyIn" = "Только входящие";
+"Transaction.Filter.onlyOut" = "Только исходящие";
+
+"Watchlist.title" = "Избранное";
+"Watchlist.copyFullAddress" = "Скопировать полный адрес";
+"Watchlist.editShortName" = "Редактировать";
+
+"Edit.title" = "Установить короткое имя для адреса";
+"Edit.placeholder" = "Введите короткое имя";
+"Edit.fullAddress" = "Адрес";

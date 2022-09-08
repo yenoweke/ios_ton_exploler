@@ -1,0 +1,25 @@
+import Foundation
+
+protocol {{ name }}Dependencies {
+
+}
+
+struct {{ name }}DependenciesImpl: {{ name }}Dependencies {
+    private let serviceLocator: ServiceLocator
+    
+    init(serviceLocator: ServiceLocator) {
+        self.serviceLocator = serviceLocator
+    }
+}
+
+protocol {{ name }}InteractorInput {
+
+}
+
+protocol {{ name }}InteractorOutput: AnyObject {
+
+}
+
+protocol {{ name }}RouterInput {
+
+}
