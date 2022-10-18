@@ -1,7 +1,8 @@
 import SwiftUI
 
-struct WalletCardView: View {
+struct WalletCardView<AddToWatchlistView: View>: View {
     let wallet: WalletCardItem
+    let addToWatchlistView: () -> AddToWatchlistView
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -12,8 +13,8 @@ struct WalletCardView: View {
                     .unredacted()
                 
                 Spacer()
-                
-//                AddToWatchlistComponent(address: self.vm.address)
+
+                self.addToWatchlistView()
             }
             
             HStack {
@@ -93,12 +94,12 @@ extension WalletCardView {
 struct WalletCardView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            WalletCardView(wallet: Self.wallet)
+            WalletCardView(wallet: Self.wallet, addToWatchlistView: { EmptyView() })
             
-            WalletCardView(wallet: Self.wallet)
+            WalletCardView(wallet: Self.wallet, addToWatchlistView: { EmptyView() })
                 .redacted(reason: .placeholder)
             
-            WalletCardView.Error(
+            WalletCardView<EmptyView>.Error(
                 address: Self.wallet.address,
                 title: "Ошибка загрузки",
                 retry: { }

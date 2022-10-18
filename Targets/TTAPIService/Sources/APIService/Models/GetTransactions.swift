@@ -52,9 +52,9 @@ public struct GetTransactionsResponse: Codable {
     let ok: Bool
     let result: [TxItem]
 
-    public struct TxItem: Codable, Identifiable {
+    public struct TxItem: Codable, Identifiable, Hashable {
         public var id: String {
-            self.transactionID.lt + self.transactionID.hash
+            self.transactionID.lt + "_" + self.transactionID.hash
         }
 
         let type: ResultType
@@ -118,7 +118,7 @@ public struct GetTransactionsResponse: Codable {
         case rawMessage = "raw.message"
     }
     
-    enum ResultType: String, Codable {
+    enum ResultType: String, Codable, Hashable {
         case rawTransaction = "raw.transaction"
     }
 }

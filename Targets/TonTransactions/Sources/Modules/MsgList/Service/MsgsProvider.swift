@@ -51,10 +51,16 @@ final class MsgsProviderImpl: MsgsProvider {
             return []
         }
 
-        let response = try await self.service.fetchTransactions(address: self.address, from: lastTransactionID)
-        self.lastTransactionID = response.first { item in
-            item.transactionID != lastTransactionID
-        }.map(\.transactionID)
+        var response = try await self.service.fetchTransactions(address: self.address, from: lastTransactionID)
+        while response.isEmpty == false, response.first?.transactionID == self.lastTransactionID {
+            response.removeFirst()
+        }
+
+        self.lastTransactionID = response
+                .last { item in
+                    item.transactionID != lastTransactionID
+                }
+                .map(\.transactionID)
 
         let msgs = response.flatMap(Self.makeMsgs)
         self.msgStorage.put(msgs)
@@ -63,7 +69,7 @@ final class MsgsProviderImpl: MsgsProvider {
 
     private static func makeMsgs(from item: TxnItem) -> [Message] {
         let msgs: [Message]
-        if let msg = Self.makeInMsgs(from: item) {
+        if let msg = Self.makeInMsgs(from: item, parentHash: item.hashValue.description) {
             msgs = Self.makeOutMsgs(from: item) + [msg]
         }
         else {
@@ -72,12 +78,12 @@ final class MsgsProviderImpl: MsgsProvider {
         return msgs
     }
 
-    private static func makeInMsgs(from item: TxnItem) -> Message? {
+    private static func makeInMsgs(from item: TxnItem, parentHash: String) -> Message? {
         if item.inMsg.source.isEmpty { return nil }
 
         let msg = item.inMsg
         return Self.makeMessage(
-                id: msg.hashValue.description,
+                id: msg.hashValue.description + "_" + parentHash,
                 msg: msg,
                 incoming: true,
                 utime: item.utime
@@ -89,7 +95,7 @@ final class MsgsProviderImpl: MsgsProvider {
         return item.outMsgs.map { msg -> Message in
             idx += 1
             return Self.makeMessage(
-                    id: msg.hashValue.description + "_\(idx)",
+                    id: msg.hashValue.description + "_\(idx)" + "_" + item.hashValue.description,
                     msg: msg,
                     incoming: false,
                     utime: item.utime
@@ -97,7 +103,7 @@ final class MsgsProviderImpl: MsgsProvider {
         }
     }
 
-    private static func makeMessage(id: String, msg: GetTransactionsResponse.Msg, incoming: Bool , utime: Date) -> Message {
+    private static func makeMessage(id: String, msg: GetTransactionsResponse.Msg, incoming: Bool, utime: Date) -> Message {
         Message(
                 id: id,
                 incoming: incoming,

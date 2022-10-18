@@ -12,23 +12,6 @@ struct MessageListItemViewModel: Identifiable {
     let address: String
     let message: String
 
-    init(msg: GetTransactionsResponse.Msg, incoming: Bool, utime: Date, knownNames: KnownNamesStorage) {
-        self.id = msg.bodyHash + "_" + msg.createdLt + "_" + msg.source + "_" + msg.destination
-        self.incoming = incoming
-        self.direction = incoming ? L10n.Message.in : L10n.Message.out
-        self.fee = Formatters.ton.formatSignificant(msg.fwdFee.decimal)
-        self.transactionTime = Formatters.date.full(from: utime)
-
-        if incoming {
-            self.amount = "+" + Formatters.ton.formatSignificant(msg.value.decimal)
-        }
-        else {
-            self.amount = "-" + Formatters.ton.formatSignificant(msg.value.decimal)
-        }
-        self.address = knownNames.name(for: msg.destination) ?? msg.destination
-        self.message = msg.message
-    }
-
     init(id: String, incoming: Bool, fee: String, transactionTime: String, amount: String, address: String, message: String) {
         self.id = id
         self.incoming = incoming

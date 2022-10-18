@@ -27,18 +27,18 @@ private extension AppCoordinator {
         let inputAddressVC = InputAddressModuleContainer.assemble(InputAddressDependenciesImpl(serviceLocator: self.serviceLocator))
         
         inputAddressVC.viewControllerToShow.tabBarItem = UITabBarItem(
-            title: "one",
-            image: UIImage(systemName: "pencil.circle"),
-            selectedImage: UIImage(systemName: "pencil.circle.fill")
+            title: L10n.Tab.Search.title,
+            image: UIImage(systemName: "magnifyingglass.circle.fill"),
+            selectedImage: UIImage(systemName: "magnifyingglass.circle.fill")
         )
         let inputAddressNavController = UINavigationController(rootViewController: inputAddressVC.viewControllerToShow)
         
         let viewController2 = UIViewController()
         viewController2.view.backgroundColor = .red
         viewController2.tabBarItem = UITabBarItem(
-            title: "second",
-            image: UIImage(systemName: "calendar.circle"),
-            selectedImage: UIImage(systemName: "calendar.circle.fill")
+            title: L10n.Tab.Watchlist.title,
+            image: UIImage(systemName: "star.fill"),
+            selectedImage: UIImage(systemName: "star.fill")
         )
         
         self.tabBarController.viewControllers = [inputAddressNavController, viewController2]

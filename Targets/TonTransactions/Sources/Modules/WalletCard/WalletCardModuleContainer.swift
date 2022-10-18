@@ -1,20 +1,21 @@
 import SwiftUI
 
 final class WalletCardModuleContainer: ModuleContainer  {
-    struct ContainerView: View {
+    struct ContainerView<AddToWatchlistView: View>: View {
         @ObservedObject var state: WalletCardViewState
         let interactor: WalletCardInteractorInput
+        let addToWatchlistView: () -> AddToWatchlistView
 
         var body: some View {
             LoadingView(
                     state: self.$state.wallet,
                     startInitialLoading: self.interactor.loadWalletInfo,
                     placeholderView: {
-                        WalletCardView(wallet: self.state.placeholder)
+                        WalletCardView(wallet: self.state.placeholder, addToWatchlistView: { EmptyView() })
                                 .redacted(reason: .placeholder)
                     },
                     loadedView: { wallet in
-                        WalletCardView(wallet: wallet)
+                        WalletCardView(wallet: wallet, addToWatchlistView: addToWatchlistView)
                     },
                     errorView: { errorViewModel in
                         Text(errorViewModel.title)
@@ -36,7 +37,7 @@ final class WalletCardModuleContainer: ModuleContainer  {
         return WalletCardModuleContainer(viewControllerToShow: viewController, router: router)
     }
 
-    static func assembleView(dependencies: WalletCardDependencies) -> (view: ContainerView, router: BaseRouter) {
+    static func assembleView(dependencies: WalletCardDependencies) -> (view: ContainerView<AddToWatchlistModuleContainer.ContainerView>, router: BaseRouter) {
         let state = WalletCardViewState(address: dependencies.address)
         let stateModifier = WalletCardStateModifier(state: state)
         let router = WalletCardRouter(dependencies: dependencies)
@@ -46,7 +47,12 @@ final class WalletCardModuleContainer: ModuleContainer  {
                 walletInfoProvider: dependencies.walletInfoProvider,
                 address: dependencies.address
         )
-        let view = ContainerView(state: state, interactor: interactor)
+
+        let (addToWatchlist, _) = AddToWatchlistModuleContainer.assembleView(dependencies: dependencies.makeAddToWatchlistDependencies())
+
+        let view = ContainerView(state: state, interactor: interactor) {
+            addToWatchlist
+        }
         return (view, router)
     }
 }

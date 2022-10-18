@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TransactionID: Codable, Equatable {
+public struct TransactionID: Codable, Equatable, Hashable {
     public let type: TransactionIDType
     public let lt, hash: String
 
