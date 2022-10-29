@@ -20,7 +20,7 @@ final class MsgListModuleContainer: ModuleContainer  {
                             error: nil,
                             onShowLastElement: self.interactor.loadNextPage,
                             onTap: { vm in
-                                self.interactor.onTap(vm.id)
+                                self.interactor.onTap(vm.txnID)
                             })
                 }
                 .onAppear {

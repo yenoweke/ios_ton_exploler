@@ -13,11 +13,13 @@ final class ServiceLocator {
     
     let tonService: TonService
     let msgsStorage: MsgStorage
+    let txnsStorage: TxnsStorage
     let watchlistStorage: WatchlistStorage
-    
+
     init() {
         self.tonService = Self.makeTonService()
         self.msgsStorage = MsgsInMemoryStorage()
+        self.txnsStorage = TxnsInMemoryStorage()
         self.watchlistStorage = WatchlistStorage()
     }
 }

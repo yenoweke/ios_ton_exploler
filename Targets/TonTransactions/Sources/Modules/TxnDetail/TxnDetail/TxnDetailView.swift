@@ -1,7 +1,8 @@
 import SwiftUI
 
-struct TxnDetailView: View {
+struct TxnDetailView<MessageView: View>: View {
     let vm: TransactionDetailsViewModel
+    let messageView: (_ messageID: String) -> MessageView
 
     var body: some View {
         ScrollView {
@@ -31,22 +32,20 @@ struct TxnDetailView: View {
                 AddressDetailItemView(vm: self.vm.messagesCount)
 
                 ForEach(self.vm.messageIDs, id: \.self) { (id: String) in
-                    Text(id)
-//                    MessageComponent(vm: item)
-//                            .id(item)
+                    self.messageView(id)
                 }
             }
-                    .padding(.horizontal)
+            .padding()
         }
     }
 }
 
 struct TxnDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TxnDetailView(vm: MockTransactionDetailsViewModel())
+        TxnDetailView<Text>(vm: MockTransactionDetailsViewModel(), messageView: { Text($0) })
                 .preferredColorScheme(.light)
 
-        TxnDetailView(vm: MockTransactionDetailsViewModel())
+        TxnDetailView<Text>(vm: MockTransactionDetailsViewModel(), messageView: { Text($0) })
                 .preferredColorScheme(.dark)
     }
 }

@@ -17,6 +17,7 @@ struct Message: Identifiable {
     let fwdFee: String
     let ihrFee: String
     let createdLt: String
+    let txnID: TxnItem.ID
 }
 
 protocol MsgsProvider {
@@ -27,18 +28,21 @@ protocol MsgsProvider {
 final class MsgsProviderImpl: MsgsProvider {
     private let service: TonService
     private let msgStorage: MsgStorage
+    private let txnsStorage: TxnsStorage
     private let address: String
     private var lastTransactionID: TransactionID? = nil
 
-    init(service: TonService, msgStorage: MsgStorage, address: String) {
+    init(service: TonService, msgStorage: MsgStorage, txnsStorage: TxnsStorage, address: String) {
         self.service = service
-        self.address = address
+        self.txnsStorage = txnsStorage
         self.msgStorage = msgStorage
+        self.address = address
     }
 
     func fetchInitial() async throws -> [Message] {
         self.lastTransactionID = nil
         let response = try await self.service.fetchTransactions(address: self.address)
+        self.txnsStorage.put(response)
         self.lastTransactionID = response.last?.transactionID
 
         let msgs = response.flatMap(Self.makeMsgs)
@@ -52,6 +56,7 @@ final class MsgsProviderImpl: MsgsProvider {
         }
 
         var response = try await self.service.fetchTransactions(address: self.address, from: lastTransactionID)
+        self.txnsStorage.put(response)
         while response.isEmpty == false, response.first?.transactionID == self.lastTransactionID {
             response.removeFirst()
         }
@@ -69,7 +74,7 @@ final class MsgsProviderImpl: MsgsProvider {
 
     private static func makeMsgs(from item: TxnItem) -> [Message] {
         let msgs: [Message]
-        if let msg = Self.makeInMsgs(from: item, parentHash: item.hashValue.description) {
+        if let msg = Self.makeInMsgs(from: item) {
             msgs = Self.makeOutMsgs(from: item) + [msg]
         }
         else {
@@ -78,32 +83,29 @@ final class MsgsProviderImpl: MsgsProvider {
         return msgs
     }
 
-    private static func makeInMsgs(from item: TxnItem, parentHash: String) -> Message? {
-        if item.inMsg.source.isEmpty { return nil }
-
-        let msg = item.inMsg
-        return Self.makeMessage(
-                id: msg.hashValue.description + "_" + parentHash,
-                msg: msg,
+    private static func makeInMsgs(from item: TxnItem) -> Message? {
+        Self.makeMessage(
+                id: "incoming_message_" + item.id,
+                msg: item.inMsg,
                 incoming: true,
-                utime: item.utime
+                utime: item.utime,
+                txnID: item.id
         )
     }
 
     private static func makeOutMsgs(from item: TxnItem) -> [Message] {
-        var idx = 0
-        return item.outMsgs.map { msg -> Message in
-            idx += 1
-            return Self.makeMessage(
-                    id: msg.hashValue.description + "_\(idx)" + "_" + item.hashValue.description,
+        item.outMsgs.enumerated().map { idx, msg -> Message in
+            Self.makeMessage(
+                    id: "out_msg_\(idx)_" + item.id,
                     msg: msg,
                     incoming: false,
-                    utime: item.utime
+                    utime: item.utime,
+                    txnID: item.id
             )
         }
     }
 
-    private static func makeMessage(id: String, msg: GetTransactionsResponse.Msg, incoming: Bool, utime: Date) -> Message {
+    private static func makeMessage(id: String, msg: GetTransactionsResponse.Msg, incoming: Bool, utime: Date, txnID: TxnItem.ID) -> Message {
         Message(
                 id: id,
                 incoming: incoming,
@@ -117,7 +119,8 @@ final class MsgsProviderImpl: MsgsProvider {
                 value: msg.value.value,
                 fwdFee: msg.fwdFee.value,
                 ihrFee: msg.ihrFee.value,
-                createdLt: msg.createdLt
+                createdLt: msg.createdLt,
+                txnID: txnID
         )
     }
 }

@@ -12,7 +12,9 @@ struct MessageListItemViewModel: Identifiable {
     let address: String
     let message: String
 
-    init(id: String, incoming: Bool, fee: String, transactionTime: String, amount: String, address: String, message: String) {
+    let txnID: TxnItem.ID
+
+    init(id: String, incoming: Bool, fee: String, transactionTime: String, amount: String, address: String, message: String, txnID: TxnItem.ID) {
         self.id = id
         self.incoming = incoming
         self.direction = incoming ? L10n.Message.in : L10n.Message.out
@@ -21,6 +23,7 @@ struct MessageListItemViewModel: Identifiable {
         self.amount = amount
         self.address = address
         self.message = message
+        self.txnID = txnID
     }
 
     static func mock(incoming: Bool) -> MessageListItemViewModel {
@@ -32,7 +35,8 @@ struct MessageListItemViewModel: Identifiable {
                 transactionTime: "123123",
                 amount: "\(random) TON",
                 address: "EQAKJSIvjslkdfjasdiufsd",
-                message: "Comment message"
+                message: "Comment message",
+                txnID: "some id txn mock"
         )
     }
 }

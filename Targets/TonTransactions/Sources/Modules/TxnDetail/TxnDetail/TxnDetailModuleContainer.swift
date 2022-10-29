@@ -1,33 +1,44 @@
 import SwiftUI
 
 final class TxnDetailModuleContainer: ModuleContainer  {
-    struct ContainerView: View {
+    struct ContainerView<MessageView: View>: View {
         @ObservedObject var state: TxnDetailViewState
         let interactor: TxnDetailInteractorInput
+        let messageView: (_ messageID: String) -> MessageView
 
         var body: some View {
-            TxnDetailView(vm: MockTransactionDetailsViewModel())
+            if let vm = state.viewModel {
+                TxnDetailView(
+                        vm: vm,
+                        messageView: messageView
+                )
+            } else {
+                Color.clear
+                        .onAppear {
+                            self.interactor.load()
+                        }
+            }
+
         }
     }
 
     static func assemble(_ dependencies: TxnDetailDependencies) -> TxnDetailModuleContainer {
         let (view, router) = Self.assembleView(dependencies: dependencies)
         let viewController = HostingViewController(rootView: view)
-
-        router.navigationControllerProvider = { [weak viewController] in
-            viewController?.navigationController
-        }
-        router.presentingViewControllerProvider = { [weak viewController] in
-            viewController
-        }
+        router.set(rootViewController: viewController)
         return TxnDetailModuleContainer(viewControllerToShow: viewController, router: router)
     }
 
-    static func assembleView(dependencies: TxnDetailDependencies) -> (view: ContainerView, router: BaseRouter) {
+    static func assembleView(dependencies: TxnDetailDependencies) -> (view: ContainerView<MsgDetailsModuleContainer.ContainerView>, router: BaseRouter) {
         let state = TxnDetailViewState()
         let router = TxnDetailRouter(dependencies: dependencies)
-        let interactor = TxnDetailInteractor(output: state, router: router)
-        let view = ContainerView(state: state, interactor: interactor)
+        let interactor = TxnDetailInteractor(output: state, router: router, txnID: dependencies.txnID, txnsStorage: dependencies.txnsStorage)
+
+        let view = ContainerView(state: state, interactor: interactor, messageView: { msgID -> MsgDetailsModuleContainer.ContainerView in
+            let msgDetail = MsgDetailsModuleContainer.assembleView(dependencies: dependencies.makeMsgDetailsDependencies(for: msgID))
+            router.addSubRouter(msgDetail.router)
+            return msgDetail.view
+        })
         return (view, router)
     }
 }

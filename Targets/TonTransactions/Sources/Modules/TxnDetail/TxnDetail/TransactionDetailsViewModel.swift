@@ -58,11 +58,11 @@ struct TransactionDetailsViewModelImpl: TransactionDetailsViewModel {
                 copy: false
         )
 
-//        let inMsg = transaction.inMsg.
-//        let outMsgs = transaction.outMsgs.map {
-//            MessageViewModel(msg: $0, incoming: false)
-//        }
+        let inMsg = "incoming_message_" + transaction.id
+        let outMsgs = transaction.outMsgs.enumerated().map { idx, msg in
+            "out_msg_\(idx)_" + transaction.id
+        }
 
-        self.messageIDs = []
+        self.messageIDs = [inMsg] + outMsgs
     }
 }

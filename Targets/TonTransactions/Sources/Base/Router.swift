@@ -95,6 +95,8 @@ open class BaseRouter: Router {
         return self._activeItem
     }
 
+    private let subRouters = NSHashTable<AnyObject>.weakObjects()
+
     var navigationController: UINavigationController? {
         self.navigationControllerProvider?() ?? self.rootViewController?.navigationController
     }
@@ -191,14 +193,21 @@ open class BaseRouter: Router {
         }
     }
 
-
     public func set(rootViewController: UIViewController) {
         self.rootViewController = rootViewController
+        (self.subRouters.allObjects as? [Router] ?? []).forEach { router in
+            router.set(rootViewController: rootViewController)
+        }
     }
 
 //    public func makeBusy() -> BusyIndicator? {
 //        self.presentingViewController?.makeBusy() ?? self.navigationController?.makeBusy()
 //    }
+
+    public func addSubRouter(_ router: Router) {
+        self.subRouters.add(router)
+        self.rootViewController.map(router.set(rootViewController: ))
+    }
 
     private func routerIsValid(_ router: Router) -> Bool {
         if let router = router as? BaseRouter {
@@ -206,6 +215,7 @@ open class BaseRouter: Router {
         }
         return true
     }
+
 }
 
 //extension BaseRouter: AlertRouter {

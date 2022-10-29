@@ -15,6 +15,7 @@ struct TxListDependenciesImpl: MsgListDependencies {
         MsgsProviderImpl(
                 service: self.serviceLocator.tonService,
                 msgStorage: self.serviceLocator.msgsStorage,
+                txnsStorage: self.serviceLocator.txnsStorage,
                 address: self.address
         )
     }

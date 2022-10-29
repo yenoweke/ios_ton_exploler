@@ -29,7 +29,7 @@ final class MsgListViewStateModifier: MsgListInteractorOutput {
 
     func didLoad(_ items: [Message], initial: Bool) {
         Task {
-            let viewModel: [MessageListItemViewModel] = items.map(Self.makeViewModel)
+            let viewModel: [MessageListItemViewModel] = items.compactMap(Self.makeViewModel)
             await MainActor.run {
                 self.handleViewModels(initial: initial, viewModel: viewModel)
             }
@@ -58,7 +58,9 @@ private extension MsgListViewStateModifier {
         }
     }
 
-    static func makeViewModel(_ msg: Message) -> MessageListItemViewModel {
+    static func makeViewModel(_ msg: Message) -> MessageListItemViewModel? {
+        if msg.source.isEmpty { return nil }
+
         let amount: String = {
             let formatted = Formatters.ton.formatSignificant(msg.amount.decimal)
             let sign = msg.incoming ? "+" : "-"
@@ -71,7 +73,8 @@ private extension MsgListViewStateModifier {
                 transactionTime: Formatters.date.full(from: msg.transactionTime),
                 amount: amount,
                 address: msg.source,
-                message: msg.message
+                message: msg.message,
+                txnID: msg.txnID
         )
     }
 }
