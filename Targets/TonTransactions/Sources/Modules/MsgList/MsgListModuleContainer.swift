@@ -36,12 +36,10 @@ final class MsgListModuleContainer: ModuleContainer  {
         let (view, router) = Self.assembleView(dependencies: dependencies)
         let viewController = HostingViewController(rootView: view)
 
-        router.navigationControllerProvider = { [weak viewController] in
-            viewController?.navigationController
+        viewController.navigationItem.rightBarButtonItem = BlockBarButtonItem.item(title: "hell") {
+
         }
-        router.presentingViewControllerProvider = { [weak viewController] in
-            viewController
-        }
+        router.set(rootViewController: viewController)
         return MsgListModuleContainer(viewControllerToShow: viewController, router: router)
     }
 
@@ -55,14 +53,8 @@ final class MsgListModuleContainer: ModuleContainer  {
                 itemsProvider: dependencies.itemsProvider
         )
 
-        let (topView, _) = WalletCardModuleContainer.assembleView(dependencies: dependencies.makeWalletCardDependencies())
-
-//        wallRouter.navigationControllerProvider = { [weak router] in
-//            routere4§qe4  ?.navigationController
-//        }
-//        wallRouter.presentingViewControllerProvider = { [weak router] in
-//            router?.presentingViewControllerProvider
-//        }
+        let (topView, walletCardRouter) = WalletCardModuleContainer.assembleView(dependencies: dependencies.makeWalletCardDependencies())
+        router.addSubRouter(walletCardRouter)
 
         let view = ContainerView(state: state, interactor: interactor) {
             topView

@@ -32,7 +32,7 @@ struct TransactionDetailsViewModelImpl: TransactionDetailsViewModel {
                 descr: transaction.transactionID.lt)
         self.timeStamp = AddressDetailItemViewModel(
                 title: L10n.Transaction.Details.timeStamp,
-                descr: Formatters.date.full(from: transaction.utime))
+                descr: Formatters.date.full(from: transaction.date))
 
         self.fee = FeeViewModel(
                 total: AddressDetailItemViewModel(

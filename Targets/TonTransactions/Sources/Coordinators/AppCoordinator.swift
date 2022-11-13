@@ -24,24 +24,24 @@ final class AppCoordinator {
 
 private extension AppCoordinator {
     func setupTabBar() {
-        let inputAddressVC = InputAddressModuleContainer.assemble(InputAddressDependenciesImpl(serviceLocator: self.serviceLocator))
-        
-        inputAddressVC.viewControllerToShow.tabBarItem = UITabBarItem(
+        let inputAddressContainer = InputAddressModuleContainer.assemble(InputAddressDependenciesImpl(serviceLocator: self.serviceLocator))
+
+        inputAddressContainer.viewControllerToShow.tabBarItem = UITabBarItem(
             title: L10n.Tab.Search.title,
             image: UIImage(systemName: "magnifyingglass.circle.fill"),
             selectedImage: UIImage(systemName: "magnifyingglass.circle.fill")
         )
-        let inputAddressNavController = UINavigationController(rootViewController: inputAddressVC.viewControllerToShow)
-        
-        let viewController2 = UIViewController()
-        viewController2.view.backgroundColor = .red
-        viewController2.tabBarItem = UITabBarItem(
+        let inputAddressNavController = UINavigationController(rootViewController: inputAddressContainer.viewControllerToShow)
+
+        let favoriteContainer = FavoriteAddressesModuleContainer.assemble(FavoriteAddressesDependenciesImpl(serviceLocator: self.serviceLocator))
+        favoriteContainer.viewControllerToShow.tabBarItem = UITabBarItem(
             title: L10n.Tab.Watchlist.title,
             image: UIImage(systemName: "star.fill"),
             selectedImage: UIImage(systemName: "star.fill")
         )
-        
-        self.tabBarController.viewControllers = [inputAddressNavController, viewController2]
+        let favoriteContainerNavController = UINavigationController(rootViewController: favoriteContainer.viewControllerToShow)
+
+        self.tabBarController.viewControllers = [inputAddressNavController, favoriteContainerNavController]
         
         let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithDefaultBackground()

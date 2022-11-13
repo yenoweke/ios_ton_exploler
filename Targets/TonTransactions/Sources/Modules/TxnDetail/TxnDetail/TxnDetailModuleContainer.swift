@@ -18,13 +18,13 @@ final class TxnDetailModuleContainer: ModuleContainer  {
                             self.interactor.load()
                         }
             }
-
         }
     }
 
     static func assemble(_ dependencies: TxnDetailDependencies) -> TxnDetailModuleContainer {
         let (view, router) = Self.assembleView(dependencies: dependencies)
         let viewController = HostingViewController(rootView: view)
+        viewController.title = L10n.Transaction.Details.title
         router.set(rootViewController: viewController)
         return TxnDetailModuleContainer(viewControllerToShow: viewController, router: router)
     }

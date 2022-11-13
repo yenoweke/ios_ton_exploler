@@ -58,7 +58,10 @@ public struct GetTransactionsResponse: Codable {
         }
 
         let type: ResultType
-        public let utime: Date
+        private let utime: TimeInterval
+        public var date: Date {
+            Date(timeIntervalSince1970: utime)
+        }
         public let data: String
         public let transactionID: TransactionID
         public let fee, storageFee, otherFee: String

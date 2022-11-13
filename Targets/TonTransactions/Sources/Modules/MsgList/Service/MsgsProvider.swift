@@ -88,7 +88,7 @@ final class MsgsProviderImpl: MsgsProvider {
                 id: "incoming_message_" + item.id,
                 msg: item.inMsg,
                 incoming: true,
-                utime: item.utime,
+                utime: item.date,
                 txnID: item.id
         )
     }
@@ -99,7 +99,7 @@ final class MsgsProviderImpl: MsgsProvider {
                     id: "out_msg_\(idx)_" + item.id,
                     msg: msg,
                     incoming: false,
-                    utime: item.utime,
+                    utime: item.date,
                     txnID: item.id
             )
         }
