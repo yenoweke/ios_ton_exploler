@@ -51,4 +51,4 @@
 
 "Edit.title" = "Установить короткое имя для адреса";
 "Edit.placeholder" = "Введите короткое имя";
-"Edit.fullAddress" = "Адрес";
+"Edit.fullAddress" = "Полный Адрес";

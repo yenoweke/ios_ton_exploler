@@ -3,11 +3,11 @@ import Foundation
 protocol FavoriteAddressesDependencies {
     var watchlistStorage: WatchlistStorage { get }
     func makeMsgListDependencies(address: String) -> MsgListDependencies
+    func makeEditAddressDependencies(address: String, moduleOutput: EditAddressModuleOutput?) -> EditAddressDependencies
 }
 
 struct FavoriteAddressesDependenciesImpl: FavoriteAddressesDependencies {
     private let serviceLocator: ServiceLocator
-
     var watchlistStorage: WatchlistStorage { self.serviceLocator.watchlistStorage }
 
     init(serviceLocator: ServiceLocator) {
@@ -16,6 +16,10 @@ struct FavoriteAddressesDependenciesImpl: FavoriteAddressesDependencies {
 
     func makeMsgListDependencies(address: String) -> MsgListDependencies {
         TxListDependenciesImpl(serviceLocator: self.serviceLocator, address: address)
+    }
+
+    func makeEditAddressDependencies(address: String, moduleOutput: EditAddressModuleOutput?) -> EditAddressDependencies {
+        EditAddressDependenciesImpl(serviceLocator: self.serviceLocator, address: address, moduleOutput: moduleOutput)
     }
 }
 

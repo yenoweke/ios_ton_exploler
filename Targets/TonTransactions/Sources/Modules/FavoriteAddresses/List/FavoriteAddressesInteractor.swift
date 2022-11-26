@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 
 struct WatchlistItem {
     let address: String
@@ -9,11 +10,19 @@ final class FavoriteAddressesInteractor {
     private weak var output: FavoriteAddressesInteractorOutput?
     private let router: FavoriteAddressesRouterInput
     private let watchlistStorage: WatchlistStorage
+    private var cancellable: Set<AnyCancellable> = []
 
     init(output: FavoriteAddressesInteractorOutput, router: FavoriteAddressesRouterInput, watchlistStorage: WatchlistStorage) {
         self.output = output
         self.router = router
         self.watchlistStorage = watchlistStorage
+
+        watchlistStorage.$shortNames
+                .receive(on: RunLoop.main)
+                .sink { [weak self] _ in
+                    self?.prepareList()
+                }
+                .store(in: &self.cancellable)
     }
 }
 
