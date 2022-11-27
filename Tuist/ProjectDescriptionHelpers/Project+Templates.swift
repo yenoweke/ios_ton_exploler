@@ -51,6 +51,7 @@ extension Project {
                 platform: platform,
                 product: .framework,
                 bundleId: "space.dmitrii.\(name)",
+                deploymentTarget: .iOS(targetVersion: "15.1", devices: .iphone),
                 infoPlist: .default,
                 sources: ["Targets/\(name)/Sources/**"],
                 resources: [],
@@ -80,11 +81,28 @@ extension Project {
             "TONCENTER_API_KEY": "$(TONCENTER_API_KEY)"
             ]
 
+
+//        let settings = ProjectDescription.Settings.settings(
+//            configurations: [
+//                .release(
+//                    name: "Release",
+//                    settings: ["entitlements": "Resources/TonTransactions-Release.entitlements"],
+//                    xcconfig: .relativeToRoot("xcconfigs/Release.xcconfig")
+//                ),
+//                .debug(
+//                    name: "Debug",
+//                    settings: ["entitlements": "Resources/TonTransactions-Debug.entitlements"],
+//                    xcconfig: .relativeToRoot("xcconfigs/Debug.xcconfig")
+//                )
+//            ]
+//        )
+
         let mainTarget = Target(
             name: name,
             platform: platform,
             product: .app,
             bundleId: "space.dmitrii.\(name)",
+            deploymentTarget: .iOS(targetVersion: "15.1", devices: .iphone),
             infoPlist: .extendingDefault(with: infoPlist),
             sources: ["Targets/\(name)/Sources/**", "Targets/\(name)/Generated/**"],
             resources: ["Targets/\(name)/Resources/**"],

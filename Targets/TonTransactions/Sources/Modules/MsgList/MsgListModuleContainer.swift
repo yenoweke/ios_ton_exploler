@@ -36,9 +36,7 @@ final class MsgListModuleContainer: ModuleContainer  {
         let (view, router) = Self.assembleView(dependencies: dependencies)
         let viewController = HostingViewController(rootView: view)
 
-        viewController.navigationItem.rightBarButtonItem = BlockBarButtonItem.item(title: "hell") {
-
-        }
+//        viewController.navigationItem.rightBarButtonItem = BlockBarButtonItem.item(title: "hell") {}
         router.set(rootViewController: viewController)
         return MsgListModuleContainer(viewControllerToShow: viewController, router: router)
     }

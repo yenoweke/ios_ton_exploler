@@ -1,1 +1,2 @@
-TONCENTER_API_KEY = 718cf7f93d1b3d898c0bb2e3fc9bf643897c6d1ee397c52475d9d628a16fef04
+TONCENTER_API_KEY = x
+CODE_SIGN_ENTITLEMENTS = Resources/TonTransactions-Release.entitlements

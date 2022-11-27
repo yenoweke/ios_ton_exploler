@@ -1,13 +1,7 @@
-//
-//  InputAddressView.swift
-//  ton
-//
-//  Created by Dmitrii Chikovinskii on 11.06.2022.
-//
-
 import SwiftUI
 import Combine
 import TonTransactionsKit
+import TonTransactionsUI
 
 struct InputAddressView: View {
     
@@ -21,14 +15,25 @@ struct InputAddressView: View {
             AppImage.Logo.tonLogo.swiftUI
             
             Spacer()
-            
-            TextField(
-                L10n.InputAddress.input,
-                text: self.$address
-            )
-            .onSubmit(self.onSubmit)
-            .font(AppFont.regular.textStyle(.body))
-            
+
+            SeparatorView()
+            HStack {
+                TextField(
+                        L10n.InputAddress.input,
+                        text: self.$address
+                )
+                        .onSubmit(self.onSubmit)
+                        .font(AppFont.regular.textStyle(.body))
+
+                Button(action: {
+                    self.address = ""
+                }) {
+                    Image(systemName: "multiply.circle.fill")
+                            .foregroundColor(.secondary)
+                }
+            }.padding(.vertical, 6.0)
+            SeparatorView()
+
             Spacer()
             
             Button(

@@ -1,4 +1,5 @@
 import SwiftUI
+import TonTransactionsUI
 
 struct EditAddressView: View {
     let fullAddress: String
@@ -21,25 +22,23 @@ struct EditAddressView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.bottom, 16.0)
 
-            Rectangle()
-                    .background(Color.gray)
-                    .frame(height: 1.0)
-                    .padding(.bottom, 6.0)
-                    .opacity(0.1)
-
-            TextField(
-                    L10n.Edit.placeholder,
-                    text: self.$address
-            )
-                    .focused(self.$focused)
-                    .onSubmit(self.onSubmit)
-                    .font(AppFont.regular.textStyle(.body))
-
-            Rectangle()
-                    .background(Color.gray)
-                    .frame(height: 1.0)
-                    .padding(.top, 6.0)
-                    .opacity(0.1)
+            SeparatorView()
+            HStack {
+                TextField(
+                        L10n.Edit.placeholder,
+                        text: self.$address
+                )
+                        .focused(self.$focused)
+                        .onSubmit(self.onSubmit)
+                        .font(AppFont.regular.textStyle(.body))
+                Button(action: {
+                    self.address = ""
+                }) {
+                    Image(systemName: "multiply.circle.fill")
+                            .foregroundColor(.secondary)
+                }
+            }.padding(.vertical, 6.0)
+            SeparatorView()
 
             Spacer()
 

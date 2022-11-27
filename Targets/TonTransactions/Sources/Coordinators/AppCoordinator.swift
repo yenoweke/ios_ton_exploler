@@ -3,13 +3,20 @@ import UIKit
 
 final class AppCoordinator {
     private let serviceLocator: ServiceLocator
-    
+
     private let tabBarController = UITabBarController()
-    
+
+    private weak var appDelegate: AppDelegateHandlerOwner?
     private var window: UIWindow?
+    private let pushManager: PushManager
     
-    init() {
+    init(appDelegate: AppDelegateHandlerOwner) {
+        self.appDelegate = appDelegate
         self.serviceLocator = ServiceLocator()
+
+        let pushManagerImpl = PushManagerImpl()
+        appDelegate.add(handler: pushManagerImpl.appDelegateHandler)
+        self.pushManager = pushManagerImpl
     }
     
     func start() {
@@ -18,6 +25,10 @@ final class AppCoordinator {
         
         self.window?.rootViewController = self.tabBarController
         self.window?.makeKeyAndVisible()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.pushManager.requestPermissions({})
+        }
     }
     
 }
