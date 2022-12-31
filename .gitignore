@@ -70,3 +70,6 @@ Derived/
 ### Tuist managed dependencies ###
 Tuist/Dependencies
 xcconfigs/*
+
+.vscode
+.DS_Store
