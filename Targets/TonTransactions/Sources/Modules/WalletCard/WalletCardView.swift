@@ -41,7 +41,6 @@ struct WalletCardView<AddToWatchlistView: View>: View {
                         .redacted(reason: .placeholder)
                 }
             }
-            
         }
         .padding()
         .background(

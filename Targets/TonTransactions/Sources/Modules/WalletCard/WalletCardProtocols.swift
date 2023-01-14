@@ -2,8 +2,7 @@ import Foundation
 
 protocol WalletCardDependencies {
     var address: String { get }
-    var walletInfoProvider: WalletInfoProvider { get }
-    func makeAddToWatchlistDependencies() -> AddToWatchlistDependencies
+    func makeWalletInfoProvider() -> WalletInfoProvider
 }
 
 struct WalletCardDependenciesImpl: WalletCardDependencies {
@@ -11,17 +10,13 @@ struct WalletCardDependenciesImpl: WalletCardDependencies {
 
     let address: String
 
-    var walletInfoProvider: WalletInfoProvider {
-        self.serviceLocator.tonService
-    }
-
     init(serviceLocator: ServiceLocator, address: String) {
         self.serviceLocator = serviceLocator
         self.address = address
     }
-
-    func makeAddToWatchlistDependencies() -> AddToWatchlistDependencies {
-        AddToWatchlistDependenciesImpl(serviceLocator: self.serviceLocator, address: self.address)
+    
+    func makeWalletInfoProvider() -> WalletInfoProvider {
+        WalletInfoProviderImpl(service: self.serviceLocator.tonNetworkService)
     }
 }
 

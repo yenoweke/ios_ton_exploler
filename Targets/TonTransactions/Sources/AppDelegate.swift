@@ -47,6 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AppDelegateHandlerOwner {
             handler.didRegisterForRemoteNotificationsHandler?(application, deviceToken)
         }
     }
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("failed")
+    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -93,15 +96,22 @@ final class AppDelegateHandler {
 }
 
 enum Configuration {
+    
+    static let toncenterAPIKey: String = try! Configuration.value(for: "TONCENTER_API_KEY")
+    static let ttBackendURL: String = {
+        let string: String = try! Configuration.value(for: "TT_BACKEND_URL")
+        return string.replacingOccurrences(of: "\\/", with: "/")
+    }()
+
     enum Error: Swift.Error {
         case missingKey, invalidValue
     }
-
-    static func value<T>(for key: String) throws -> T where T: LosslessStringConvertible {
-        guard let object = Bundle.main.object(forInfoDictionaryKey:key) else {
+    
+    private static func value<T>(for key: String) throws -> T where T: LosslessStringConvertible {
+        guard let object = Bundle.main.object(forInfoDictionaryKey: key) else {
             throw Error.missingKey
         }
-
+        
         switch object {
         case let value as T:
             return value

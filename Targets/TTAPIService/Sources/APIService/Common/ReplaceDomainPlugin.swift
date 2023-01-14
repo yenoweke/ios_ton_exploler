@@ -8,7 +8,7 @@
 import Moya
 import Foundation
 
-struct TransactionsDomainPlugin: PluginType {
+struct ReplaceDomainPlugin: PluginType {
     private let domain: () -> String // = { "https://toncenter.com/api/v2/" }  //"https://api.ton.cat/v2/explorer/" } //
     
     init(domain: @escaping () -> String) {

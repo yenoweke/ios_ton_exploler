@@ -26,13 +26,13 @@ protocol MsgsProvider {
 }
 
 final class MsgsProviderImpl: MsgsProvider {
-    private let service: TonService
+    private let service: TonNetworkService
     private let msgStorage: MsgStorage
     private let txnsStorage: TxnsStorage
     private let address: String
     private var lastTransactionID: TransactionID? = nil
 
-    init(service: TonService, msgStorage: MsgStorage, txnsStorage: TxnsStorage, address: String) {
+    init(service: TonNetworkService, msgStorage: MsgStorage, txnsStorage: TxnsStorage, address: String) {
         self.service = service
         self.txnsStorage = txnsStorage
         self.msgStorage = msgStorage
@@ -41,7 +41,7 @@ final class MsgsProviderImpl: MsgsProvider {
 
     func fetchInitial() async throws -> [Message] {
         self.lastTransactionID = nil
-        let response = try await self.service.fetchTransactions(address: self.address)
+        let response = try await self.service.fetchTransactions(address: self.address, from: nil)
         self.txnsStorage.put(response)
         self.lastTransactionID = response.last?.transactionID
 

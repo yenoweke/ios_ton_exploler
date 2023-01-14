@@ -79,7 +79,7 @@ enum ListState<Element: Identifiable> {
     }
     
     mutating func nextPageLoaded(_ elements: [Element], hasNextPage: Bool) {
-        self = .loaded(current: self.elements + elements, hasNextPage: hasNextPage)
+        self = .loaded(current: elements, hasNextPage: hasNextPage)
     }
     
     mutating func nextPageLoadingError(_ error: Error) {

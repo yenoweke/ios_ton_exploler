@@ -7,6 +7,14 @@ final class MsgListInteractor {
     private let itemsProvider: MsgsProvider
 
     private var items: [Message] = []
+    private var filters: [MsgFilter] = []
+    private var filteredItems: [Message] {
+        var items = self.items
+        for filter in filters {
+            items = filter.filter(items)
+        }
+        return items
+    }
 
     private var loadingInProgress = false
 
@@ -32,7 +40,7 @@ extension MsgListInteractor: MsgListInteractorInput {
                 let items = try await self.itemsProvider.fetchInitial()
                 self.items = items
                 await MainActor.run {
-                    self.output.didLoad(self.items, initial: true)
+                    self.output.didLoad(self.filteredItems, initial: true)
                 }
             }
             catch {
@@ -56,7 +64,7 @@ extension MsgListInteractor: MsgListInteractorInput {
                 let items = try await self.itemsProvider.fetchNext()
                 self.items += items
                 await MainActor.run {
-                    self.output.didLoad(self.items, initial: true)
+                    self.output.didLoad(self.filteredItems, initial: true)
                 }
             }
             catch  {
@@ -69,5 +77,51 @@ extension MsgListInteractor: MsgListInteractorInput {
 
     func onTap(_ txnID: String) {
         self.router.showTxnDetails(txnID)
+    }
+    
+    func apply(filter: MessagesFilter?) {
+        self.filters.removeAll()
+        if filter?.minValue != nil || filter?.maxValue != nil {
+            self.filters.append(MinMaxFilter(minValue: filter?.minValue, maxValue: filter?.maxValue))
+        }
+        if let type = filter?.selectedMsgType, type != .all {
+            self.filters.append(TypeFilter(type: type))
+        }
+        self.output.didLoad(self.filteredItems, initial: false)
+        self.output.filterApplied(filter)
+    }
+}
+
+protocol MsgFilter {
+    func filter(_ msgs: [Message]) -> [Message]
+}
+
+struct MinMaxFilter: MsgFilter {
+    private let minValue: Decimal
+    private let maxValue: Decimal
+    
+    init(minValue: Decimal?, maxValue: Decimal?) {
+        self.minValue = minValue ?? .zero
+        self.maxValue = maxValue ?? .greatestFiniteMagnitude
+    }
+
+    func filter(_ msgs: [Message]) -> [Message] {
+        msgs.filter { msg in
+            (minValue...maxValue).contains(msg.amount.decimal)
+        }
+    }
+}
+
+struct TypeFilter: MsgFilter {
+    private let incoming: Bool
+    
+    init(type: FilterMessageType) {
+        self.incoming = type == .onlyIn
+    }
+
+    func filter(_ msgs: [Message]) -> [Message] {
+        msgs.filter { msg in
+            msg.incoming == incoming
+        }
     }
 }

@@ -9,6 +9,14 @@
 "Tab.Search.title" = "Search";
 "Tab.Watchlist.title" = "Watchlist";
 
+"Account.Action.addToWatchList" = "Add to watchlist";
+"Account.Action.deleteFromWatchList" = "Delete from watchlist";
+"Account.Action.subsribeOnUpdates" = "Subsribe";
+"Account.Action.unsubsribeOnUpdates" = "Unsubsribe";
+"Account.PushPermission.ToSettings.title" = "Push Notifications";
+"Account.PushPermission.ToSettings.message" = "You can enable push notifications in settings, to receive updates.";
+"Account.PushPermission.ToSettings.button" = "Settings";
+
 "InputAddress.Go" = "Go";
 "InputAddress.Input" = "Enter TON Address";
 "InputAddress.Error.isNotValid" = "Address is not valid";

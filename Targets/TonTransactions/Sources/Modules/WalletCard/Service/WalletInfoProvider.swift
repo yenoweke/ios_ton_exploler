@@ -14,11 +14,15 @@ protocol WalletInfoProvider {
     func fetchWalletInformation(_ address: String) async throws  -> WalletCardItem
 }
 
-extension TonService: WalletInfoProvider {}
-
-extension WalletInfoProvider where Self: TonService {
+final class WalletInfoProviderImpl: WalletInfoProvider {
+    private let service: TonNetworkService
+    
+    init(service: TonNetworkService) {
+        self.service = service
+    }
+    
     func fetchWalletInformation(_ address: String) async throws -> WalletCardItem {
-        let response: GetWalletInformationResponse = try await self.fetchWalletInformation(address)
+        let response: GetWalletInformationResponse = try await self.service.fetchWalletInformation(address)
         let formattedBalance = Formatters.ton.formatSignificant(response.result.balance.decimal)
         return WalletCardItem(address: address, balance: formattedBalance, state: response.result.accountState)
     }

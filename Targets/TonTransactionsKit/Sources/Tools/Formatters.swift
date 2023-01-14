@@ -1,10 +1,3 @@
-//
-//  Formatters.swift
-//  ton
-//
-//  Created by Dmitrii Chikovinskii on 06.06.2022.
-//
-
 import Foundation
 
 public struct Formatters {

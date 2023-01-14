@@ -5,6 +5,7 @@ protocol MsgListDependencies {
 
     func makeWalletCardDependencies() -> WalletCardDependencies
     func makeTxnDetailDependencies(txnID: TxnItem.ID) -> TxnDetailDependencies
+    func makeAccountActionsDependencies() -> AccountActionsDependencies
 }
 
 struct TxListDependenciesImpl: MsgListDependencies {
@@ -13,7 +14,7 @@ struct TxListDependenciesImpl: MsgListDependencies {
 
     var itemsProvider: MsgsProvider {
         MsgsProviderImpl(
-                service: self.serviceLocator.tonService,
+                service: self.serviceLocator.tonNetworkService,
                 msgStorage: self.serviceLocator.msgsStorage,
                 txnsStorage: self.serviceLocator.txnsStorage,
                 address: self.address
@@ -32,12 +33,18 @@ struct TxListDependenciesImpl: MsgListDependencies {
     func makeTxnDetailDependencies(txnID: TxnItem.ID) -> TxnDetailDependencies {
         TxnDetailDependenciesImpl(serviceLocator: self.serviceLocator, txnID: txnID)
     }
+
+    func makeAccountActionsDependencies() -> AccountActionsDependencies {
+        AccountActionsDependenciesImpl(serviceLocator: self.serviceLocator, address: self.address)
+    }
+    
 }
 
 protocol MsgListInteractorInput {
     func initialLoad()
     func loadNextPage()
     func onTap(_ txnID: String)
+    func apply(filter: MessagesFilter?)
 }
 
 protocol MsgListInteractorOutput: AnyObject {
@@ -46,6 +53,7 @@ protocol MsgListInteractorOutput: AnyObject {
     func initialLoadStarted()
     func didLoad(_ items: [Message], initial: Bool)
     func nextPageLoadingStarted()
+    func filterApplied(_ filter: MessagesFilter?)
 }
 
 protocol MsgListRouterInput {

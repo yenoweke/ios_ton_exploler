@@ -1,10 +1,3 @@
-//
-//  UserDefault.swift
-//  ton
-//
-//  Created by Dmitrii Chikovinskii on 22.06.2022.
-//
-
 import Foundation
 
 @propertyWrapper

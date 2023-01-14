@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import TonTransactionsUI
 
 final class AppCoordinator {
     private let serviceLocator: ServiceLocator
@@ -8,32 +9,39 @@ final class AppCoordinator {
 
     private weak var appDelegate: AppDelegateHandlerOwner?
     private var window: UIWindow?
-    private let pushManager: PushManager
+    private let preparer: Preparer
     
     init(appDelegate: AppDelegateHandlerOwner) {
         self.appDelegate = appDelegate
-        self.serviceLocator = ServiceLocator()
-
-        let pushManagerImpl = PushManagerImpl()
+        let pushManagerImpl = PushManagerImpl(networkService: ServiceLocator.makePushSubsriptionService())
+        self.serviceLocator = ServiceLocator(pushManager: pushManagerImpl)
         appDelegate.add(handler: pushManagerImpl.appDelegateHandler)
-        self.pushManager = pushManagerImpl
+        
+        self.preparer = PreparerAggregate(items: [
+            DeviceCreatorImpl(network: serviceLocator.makeDeviceNetworkService())
+        ])
     }
     
     func start() {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.setupTabBar()
         
-        self.window?.rootViewController = self.tabBarController
+        self.window?.rootViewController = HostingViewController(rootView: LaunchView())
         self.window?.makeKeyAndVisible()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            self.pushManager.requestPermissions({})
+        Task {
+            _ = try? await self.preparer.prepare()
+            await showTabBar()
         }
     }
-    
 }
 
 private extension AppCoordinator {
+    @MainActor
+    func showTabBar() async {
+        self.window?.rootViewController = self.tabBarController
+    }
+
     func setupTabBar() {
         let inputAddressContainer = InputAddressModuleContainer.assemble(InputAddressDependenciesImpl(serviceLocator: self.serviceLocator))
 

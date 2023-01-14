@@ -37,21 +37,19 @@ final class WalletCardModuleContainer: ModuleContainer  {
         return WalletCardModuleContainer(viewControllerToShow: viewController, router: router)
     }
 
-    static func assembleView(dependencies: WalletCardDependencies) -> (view: ContainerView<AddToWatchlistModuleContainer.ContainerView>, router: BaseRouter) {
+    static func assembleView(dependencies: WalletCardDependencies) -> (view: ContainerView<some View>, router: BaseRouter) {
         let state = WalletCardViewState(address: dependencies.address)
         let stateModifier = WalletCardStateModifier(state: state)
         let router = WalletCardRouter(dependencies: dependencies)
         let interactor = WalletCardInteractor(
                 output: stateModifier,
                 router: router,
-                walletInfoProvider: dependencies.walletInfoProvider,
+                walletInfoProvider: dependencies.makeWalletInfoProvider(),
                 address: dependencies.address
         )
 
-        let (addToWatchlist, _) = AddToWatchlistModuleContainer.assembleView(dependencies: dependencies.makeAddToWatchlistDependencies())
-
         let view = ContainerView(state: state, interactor: interactor) {
-            addToWatchlist
+            EmptyView()
         }
         return (view, router)
     }

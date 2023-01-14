@@ -9,6 +9,14 @@
 "Tab.Search.title" = "Поиск";
 "Tab.Watchlist.title" = "Избранное";
 
+"Account.Action.addToWatchList" = "Добавить в избранное";
+"Account.Action.deleteFromWatchList" = "Удалить из избранного";
+"Account.Action.subsribeOnUpdates" = "Подписаться на обновления";
+"Account.Action.unsubsribeOnUpdates" = "Отписаться от обновлений";
+"Account.PushPermission.ToSettings.title" = "Уведомления";
+"Account.PushPermission.ToSettings.message" = "Вы можете включить уведомления в настройках, чтобы получать обновления этого адреса.";
+"Account.PushPermission.ToSettings.button" = "Настройки";
+
 "InputAddress.Go" = "Показать";
 "InputAddress.Input" = "Введите TON Адрес";
 "InputAddress.Error.isNotValid" = "Адрес введён неверно";

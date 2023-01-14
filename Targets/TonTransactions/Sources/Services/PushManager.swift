@@ -1,5 +1,6 @@
 import UIKit
 import UserNotifications
+import TTAPIService
 
 protocol PermissionRequestService {
 }
@@ -32,27 +33,45 @@ final class PushManagerImpl: NSObject, PushManager {
         }
     }
 
+    private let networkService: PushSubscriptionNetworkService
+    private var token: String?
     private var listeners = NSHashTable<AnyObject>.weakObjects()
     private var stateObserver: NSObjectProtocol?
 
     var appDelegateHandler = AppDelegateHandler()
 
-    override init() {
+    init(networkService: PushSubscriptionNetworkService) {
+        self.networkService = networkService
         super.init()
         UNUserNotificationCenter.current().delegate = self
-        self.checkNotificationSettings()
+
         let name = UIApplication.didBecomeActiveNotification
         self.stateObserver = NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil) { [weak self] _ in
             self?.checkNotificationSettings()
         }
         self.appDelegateHandler.didRegisterForRemoteNotificationsHandler = { [weak self] _, data in
             let token = data.reduce("", { $0 + String(format: "%02X", $1) })
-            print(token)
+            self?.token = token
+            self?.forceSendPushToken()
         }
     }
 
     private func forceSendPushToken() {
-        print("PushManagerImpl / hi there")
+        guard let token = self.token else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                UIApplication.shared.registerForRemoteNotifications()
+            })
+            return
+        }
+        Task {
+            try await self.networkService.subscribe(deviceID: Device.identifier, with: token)
+        }
+    }
+    
+    private func pushPermissionDinied() {
+        Task {
+            try await self.networkService.pushDisabled(deviceID: Device.identifier)
+        }
     }
 
     private func checkNotificationSettings() {
@@ -61,6 +80,7 @@ final class PushManagerImpl: NSObject, PushManager {
                 switch settings.authorizationStatus {
                 case .denied, .provisional:
                     self?.status = .denied
+                    self?.pushPermissionDinied()
                 case .authorized:
                     self?.status = .allowed
                     if UIApplication.shared.isRegisteredForRemoteNotifications {
@@ -99,32 +119,18 @@ final class PushManagerImpl: NSObject, PushManager {
     }
 
     private func notifyStatusChange() {
-        if let listeners = self.listeners.allObjects as? [PushManagerStatusChangeListener] {
-            listeners.forEach({ $0.pushManagerDidChangeStatus(self) })
-        }
+        (self.listeners.allObjects as? [PushManagerStatusChangeListener])?.forEach({ listener in
+            listener.pushManagerDidChangeStatus(self)
+        })
     }
 }
 
 extension PushManagerImpl: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-//        if let router = self.deepLinkRouter,
-//           let url = self.url(from: notification),
-//           let deepLink = self.deepLinkProcessor.parse(url: url),
-//           router.alreadyIn(link: deepLink) {
-//            completionHandler([])
-//            return
-//        }
         completionHandler([.banner, .list, .badge, .sound])
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping VoidClosure) {
-//        if let url = self.url(from: response.notification) {
-//            self.deepLinkProcessor.process(url: url)
-//            self.didHandlePushHandler?(response.notification.request.content.userInfo, url)
-//        }
-//        else {
-//            self.didHandlePushHandler?(response.notification.request.content.userInfo, nil)
-//        }
         completionHandler()
     }
 }

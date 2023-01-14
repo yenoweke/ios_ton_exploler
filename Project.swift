@@ -43,6 +43,9 @@ let project = Project.app(
                 .target(name: "TonTransactionsKit")
             ]
         )
+    ],
+    dependencies: [
+        .external(name: "SwiftKeychainWrapper")
     ]
 )
 

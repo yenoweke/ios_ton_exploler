@@ -11,7 +11,7 @@ extension Project {
         case name(String, dependencies: [TargetDependency])
     }
     /// Helper function to create the Project for this ExampleApp
-    public static func app(name: String, platform: Platform, additionalTargets: [TargetTypeToGenerate]) -> Project {
+    public static func app(name: String, platform: Platform, additionalTargets: [TargetTypeToGenerate], dependencies: [TargetDependency]) -> Project {
         
         let appDep: [TargetDependency] = additionalTargets.map { type in
             switch type {
@@ -21,7 +21,7 @@ extension Project {
         }
         
         
-        var targets = makeAppTargets(name: name, platform: platform, dependencies: appDep)
+        var targets = makeAppTargets(name: name, platform: platform, dependencies: appDep + dependencies)
         targets += additionalTargets.flatMap({ type -> [Target] in
             switch type {
             case .name(let name, let dependencies):
@@ -78,24 +78,9 @@ extension Project {
             "UIMainStoryboardFile": "",
             "UILaunchStoryboardName": "LaunchScreen",
             "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
-            "TONCENTER_API_KEY": "$(TONCENTER_API_KEY)"
+            "TONCENTER_API_KEY": "$(TONCENTER_API_KEY)",
+            "TT_BACKEND_URL": "$(TT_BACKEND_URL)"
             ]
-
-
-//        let settings = ProjectDescription.Settings.settings(
-//            configurations: [
-//                .release(
-//                    name: "Release",
-//                    settings: ["entitlements": "Resources/TonTransactions-Release.entitlements"],
-//                    xcconfig: .relativeToRoot("xcconfigs/Release.xcconfig")
-//                ),
-//                .debug(
-//                    name: "Debug",
-//                    settings: ["entitlements": "Resources/TonTransactions-Debug.entitlements"],
-//                    xcconfig: .relativeToRoot("xcconfigs/Debug.xcconfig")
-//                )
-//            ]
-//        )
 
         let mainTarget = Target(
             name: name,

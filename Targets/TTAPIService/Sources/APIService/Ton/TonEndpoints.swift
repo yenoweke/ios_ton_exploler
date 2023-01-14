@@ -9,13 +9,13 @@ import Foundation
 import Alamofire
 import Moya
 
-enum APIService {
+enum TonEndpoints {
     case getAddressInformation(address: TONAddress)
     case getWalletInformation(address: String)
     case getTransactions(GetTransactionRequest)
 }
 
-extension APIService: TargetType {
+extension TonEndpoints: TargetType {
     var baseURL: URL {
         URL(string: "https://ton.org/")!
     }

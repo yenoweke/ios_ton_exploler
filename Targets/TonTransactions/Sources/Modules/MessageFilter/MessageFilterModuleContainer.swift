@@ -6,7 +6,7 @@ final class MessageFilterModuleContainer: ModuleContainer  {
         let interactor: MessageFilterInteractorInput
 
         var body: some View {
-            MessageFilterView()
+            MessageFilterView(onTapApply: {_ in }, onTapReset: {})
         }
     }
 

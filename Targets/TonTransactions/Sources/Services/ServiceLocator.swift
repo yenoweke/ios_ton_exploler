@@ -1,33 +1,45 @@
-//
-//  ServiceLocator.swift
-//  TonTransactions
-//
-//  Created by Dmitrii Chikovinskii on 09.08.2022.
-//  Copyright © 2022 dmitri.space. All rights reserved.
-//
-
 import Foundation
 import TTAPIService
 
 final class ServiceLocator {
     
-    let tonService: TonService
+    let tonNetworkService: TonNetworkService
     let msgsStorage: MsgStorage
     let txnsStorage: TxnsStorage
     let watchlistStorage: WatchlistStorage
+    let accountSubsriptonManager: AccountSubsriptonManager
+    let pushManager: PushManager
 
-    init() {
-        self.tonService = Self.makeTonService()
+    init(pushManager: PushManager) {
+        self.pushManager = pushManager
+        self.tonNetworkService = Self.makeTonService()
         self.msgsStorage = MsgsInMemoryStorage()
         self.txnsStorage = TxnsInMemoryStorage()
         self.watchlistStorage = WatchlistStorage()
+        self.accountSubsriptonManager = AccountSubsriptonManagerImpl(networkService: Self.makeAccountSubsriptonNetworkService())
+    }
+    
+    func makeDeviceNetworkService() -> DeviceNetworkService {
+        let apiProvider = APIBaseInfoProvider.ttBackend(baseURL: Configuration.ttBackendURL, signature: nil)
+        return NetworkServiceFactory.makeDeviceNetworkService(apiProvider: apiProvider)
+    }
+}
+
+extension ServiceLocator {
+    static func makePushSubsriptionService() -> PushSubscriptionNetworkService {
+        let apiProvider = APIBaseInfoProvider.ttBackend(baseURL: Configuration.ttBackendURL, signature: Device.signature)
+        return NetworkServiceFactory.makePushSubscriptionService(apiProvider: apiProvider)
     }
 }
 
 private extension ServiceLocator {
-    static func makeTonService() -> TonService {
-        let toncenterAPIKey: String = try! Configuration.value(for: "TONCENTER_API_KEY")
-        let apiProvider = TONApiProvider.toncenter(apiKey: toncenterAPIKey)
-        return TonService(apiProvider: apiProvider)
+    static func makeTonService() -> TonNetworkService {
+        let apiProvider = APIBaseInfoProvider.toncenter(apiKey: Configuration.toncenterAPIKey)
+        return NetworkServiceFactory.makeTonService(apiProvider: apiProvider)
+    }
+    
+    static func makeAccountSubsriptonNetworkService() -> AccountSubsriptonNetworkService {
+        let apiProvider = APIBaseInfoProvider.ttBackend(baseURL: Configuration.ttBackendURL, signature: Device.signature)
+        return NetworkServiceFactory.makeAccountSubsriptonNetworkService(apiProvider: apiProvider)
     }
 }

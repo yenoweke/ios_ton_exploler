@@ -3,12 +3,23 @@ import TonTransactionsKit
 
 final class MsgListViewState: ObservableObject {
     @Published var listState = ListState<MessageListItemViewModel>.idle
+    @Published var showFilter: Bool = false
+    var filter: MessagesFilter = MessagesFilter.default
 
     init() {
     }
 }
 
+extension MsgListViewState {
+    struct Filter {
+        let msgType: FilterMessageType
+        let minValue: Decimal?
+        let maxValue: Decimal?
+    }
+}
+
 final class MsgListViewStateModifier: MsgListInteractorOutput {
+    
     private let state: MsgListViewState
 
     init(state: MsgListViewState) {
@@ -38,6 +49,11 @@ final class MsgListViewStateModifier: MsgListInteractorOutput {
 
     func nextPageLoadingStarted() {
         self.state.listState.nextPageLoading()
+    }
+    
+    func filterApplied(_ filter: MessagesFilter?) {
+        self.state.filter = filter ?? MessagesFilter.default
+        self.state.showFilter = false
     }
 }
 
