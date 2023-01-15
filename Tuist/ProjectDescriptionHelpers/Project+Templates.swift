@@ -72,6 +72,12 @@ extension Project {
     /// Helper function to create the application target and the unit test target.
     private static func makeAppTargets(name: String, platform: Platform, dependencies: [TargetDependency]) -> [Target] {
         let platform: Platform = platform
+        
+        let urlType: InfoPlist.Value = .dictionary([
+            "CFBundleTypeRole": "Editor",
+            "CFBundleURLSchemes": ["tonsnow"]
+        ])
+        
         let infoPlist: [String: InfoPlist.Value] = [
             "CFBundleShortVersionString": "1.0",
             "CFBundleVersion": "1",
@@ -79,14 +85,16 @@ extension Project {
             "UILaunchStoryboardName": "LaunchScreen",
             "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
             "TONCENTER_API_KEY": "$(TONCENTER_API_KEY)",
-            "TT_BACKEND_URL": "$(TT_BACKEND_URL)"
-            ]
+            "TT_BACKEND_URL": "$(TT_BACKEND_URL)",
+            "ITSAppUsesNonExemptEncryption": .boolean(false),
+            "CFBundleURLTypes": .array([urlType])
+        ]
 
         let mainTarget = Target(
             name: name,
             platform: platform,
             product: .app,
-            bundleId: "space.dmitrii.\(name)",
+            bundleId: "space.dmitrii.ton",
             deploymentTarget: .iOS(targetVersion: "15.1", devices: .iphone),
             infoPlist: .extendingDefault(with: infoPlist),
             sources: ["Targets/\(name)/Sources/**", "Targets/\(name)/Generated/**"],
