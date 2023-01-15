@@ -21,7 +21,7 @@ struct InputAddressDependenciesImpl: InputAddressDependencies {
     }
     
     func makeMsgListDependencies(address: String) -> MsgListDependencies {
-        TxListDependenciesImpl(serviceLocator: self.serviceLocator, address: address)
+        MsgListDependenciesImpl(serviceLocator: self.serviceLocator, address: address)
     }
 
     func makeWalletCardDependencies(address: String) -> WalletCardDependencies {

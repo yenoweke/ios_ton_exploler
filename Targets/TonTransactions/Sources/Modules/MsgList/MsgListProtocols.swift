@@ -8,7 +8,7 @@ protocol MsgListDependencies {
     func makeAccountActionsDependencies() -> AccountActionsDependencies
 }
 
-struct TxListDependenciesImpl: MsgListDependencies {
+struct MsgListDependenciesImpl: MsgListDependencies {
     private let serviceLocator: ServiceLocator
     private let address: String
 

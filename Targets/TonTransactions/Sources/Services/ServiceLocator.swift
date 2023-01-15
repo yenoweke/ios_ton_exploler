@@ -9,9 +9,11 @@ final class ServiceLocator {
     let watchlistStorage: WatchlistStorage
     let accountSubsriptonManager: AccountSubsriptonManager
     let pushManager: PushManager
+    let deeplinkManager: DeeplinkManager
 
-    init(pushManager: PushManager) {
+    init(pushManager: PushManager, deeplinkManager: DeeplinkManager) {
         self.pushManager = pushManager
+        self.deeplinkManager = deeplinkManager
         self.tonNetworkService = Self.makeTonService()
         self.msgsStorage = MsgsInMemoryStorage()
         self.txnsStorage = TxnsInMemoryStorage()

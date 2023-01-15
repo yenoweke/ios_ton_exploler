@@ -12,10 +12,17 @@ protocol PushManager {
 
     func add(listener: PushManagerStatusChangeListener)
     func remove(listener: PushManagerStatusChangeListener)
+    
+    func add(listener: PushManagerNotificationListener)
+    func remove(listener: PushManagerNotificationListener)
 }
 
 protocol PushManagerStatusChangeListener: AnyObject {
     func pushManagerDidChangeStatus(_ pushManager: PushManager)
+}
+
+protocol PushManagerNotificationListener: AnyObject {
+    func pushManagerDidReceive(url: URL)
 }
 
 enum PushManagerStatus {
@@ -35,7 +42,8 @@ final class PushManagerImpl: NSObject, PushManager {
 
     private let networkService: PushSubscriptionNetworkService
     private var token: String?
-    private var listeners = NSHashTable<AnyObject>.weakObjects()
+    private var statusListeners = NSHashTable<AnyObject>.weakObjects()
+    private var notificationListeners = NSHashTable<AnyObject>.weakObjects()
     private var stateObserver: NSObjectProtocol?
 
     var appDelegateHandler = AppDelegateHandler()
@@ -57,6 +65,7 @@ final class PushManagerImpl: NSObject, PushManager {
     }
 
     private func forceSendPushToken() {
+        // TODO: update only if changed
         guard let token = self.token else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
                 UIApplication.shared.registerForRemoteNotifications()
@@ -111,15 +120,23 @@ final class PushManagerImpl: NSObject, PushManager {
     }
 
     func add(listener: PushManagerStatusChangeListener) {
-        self.listeners.add(listener)
+        self.statusListeners.add(listener)
     }
 
     func remove(listener: PushManagerStatusChangeListener) {
-        self.listeners.remove(listener)
+        self.statusListeners.remove(listener)
+    }
+    
+    func add(listener: PushManagerNotificationListener) {
+        self.notificationListeners.add(listener)
+    }
+    
+    func remove(listener: PushManagerNotificationListener) {
+        self.notificationListeners.add(listener)
     }
 
     private func notifyStatusChange() {
-        (self.listeners.allObjects as? [PushManagerStatusChangeListener])?.forEach({ listener in
+        (self.statusListeners.allObjects as? [PushManagerStatusChangeListener])?.forEach({ listener in
             listener.pushManagerDidChangeStatus(self)
         })
     }
@@ -131,6 +148,15 @@ extension PushManagerImpl: UNUserNotificationCenterDelegate {
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping VoidClosure) {
+        
+        if let url = self.url(from: response.notification) {
+            
+            (self.notificationListeners.allObjects as? [PushManagerNotificationListener] ?? []).forEach { listener in
+                listener.pushManagerDidReceive(url: url)
+            }
+
+        }
+
         completionHandler()
     }
 }

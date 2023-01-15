@@ -42,11 +42,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AppDelegateHandlerOwner {
         return true
     }
 
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) {
+        self.enumerateHandlers { handler in
+            handler.didReceiveRemoteNotification?(application, userInfo, completionHandler)
+        }
+    }
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         self.enumerateHandlers { handler in
             handler.didRegisterForRemoteNotificationsHandler?(application, deviceToken)
         }
     }
+
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("failed")
     }
@@ -93,6 +104,11 @@ final class AppDelegateHandler {
     var willEnterForegroundHandler: ((UIApplication) -> Void)?
     var didBecomeActiveHandler: ((UIApplication) -> Void)?
     var didRegisterForRemoteNotificationsHandler: ((UIApplication, Data) -> Void)?
+    var didReceiveRemoteNotification: ((
+        _ application: UIApplication,
+        _ userInfo: [AnyHashable : Any],
+        _ completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) -> Void)?
 }
 
 enum Configuration {

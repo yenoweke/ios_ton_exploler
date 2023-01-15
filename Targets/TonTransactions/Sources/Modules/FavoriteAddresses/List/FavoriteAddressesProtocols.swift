@@ -15,7 +15,7 @@ struct FavoriteAddressesDependenciesImpl: FavoriteAddressesDependencies {
     }
 
     func makeMsgListDependencies(address: String) -> MsgListDependencies {
-        TxListDependenciesImpl(serviceLocator: self.serviceLocator, address: address)
+        MsgListDependenciesImpl(serviceLocator: self.serviceLocator, address: address)
     }
 
     func makeEditAddressDependencies(address: String, moduleOutput: EditAddressModuleOutput?) -> EditAddressDependencies {

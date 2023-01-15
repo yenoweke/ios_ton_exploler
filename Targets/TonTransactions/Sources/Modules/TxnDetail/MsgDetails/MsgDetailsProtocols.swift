@@ -21,7 +21,7 @@ struct MsgDetailsDependenciesImpl: MsgDetailsDependencies {
     }
 
     func makeMsgListDependencies(address: String) -> MsgListDependencies {
-        TxListDependenciesImpl(serviceLocator: self.serviceLocator, address: address)
+        MsgListDependenciesImpl(serviceLocator: self.serviceLocator, address: address)
     }
 }
 
