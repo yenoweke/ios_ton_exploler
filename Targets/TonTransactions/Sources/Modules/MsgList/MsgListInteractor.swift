@@ -102,7 +102,12 @@ struct MinMaxFilter: MsgFilter {
     
     init(minValue: Decimal?, maxValue: Decimal?) {
         self.minValue = minValue ?? .zero
-        self.maxValue = maxValue ?? .greatestFiniteMagnitude
+        if let maxValue {
+            self.maxValue = (minValue ?? .zero) > maxValue ? .greatestFiniteMagnitude : maxValue
+        }
+        else {
+            self.maxValue = .greatestFiniteMagnitude
+        }
     }
 
     func filter(_ msgs: [Message]) -> [Message] {
