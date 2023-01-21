@@ -1,0 +1,12 @@
+import Foundation
+
+final class {{ name }}Interactor: {{ name }}InteractorInput {
+    
+    private weak var output: {{ name }}InteractorOutput?
+    private let router: {{ name }}RouterInput
+
+    init(output: {{ name }}InteractorOutput, router: {{ name }}RouterInput) {
+        self.output = output
+        self.router = router
+    }
+}

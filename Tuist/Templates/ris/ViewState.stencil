@@ -1,0 +1,12 @@
+import Foundation
+
+final class {{ name }}ViewState: ObservableObject {
+    
+    init() {
+   
+    }
+}
+
+extension {{ name }}ViewState: {{ name }}InteractorOutput {
+    
+}

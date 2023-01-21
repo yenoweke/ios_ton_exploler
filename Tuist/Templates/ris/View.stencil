@@ -1,0 +1,16 @@
+import SwiftUI
+
+struct {{ name }}View: View {
+    
+    var body: some View {
+        Text("Generated {{ name }}View")
+        .font(Fonts.Mulish.regular.textStyle(.body))
+    }
+    
+}
+
+struct {{ name }}View_Previews: PreviewProvider {
+    static var previews: some View {
+        {{ name }}View()
+    }
+}

@@ -1,5 +1,5 @@
-input_dir: ton/Resources/
-output_dir: ton/Resources/Generated/
+input_dir: Targets/TonTransactions/Resources/
+output_dir: Targets/TonTransactions//Generated/
 
 xcassets:
   inputs:

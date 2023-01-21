@@ -1,0 +1,9 @@
+import Foundation
+
+final class {{ name }}Router: BaseRouter, {{ name }}RouterInput {
+    private let dependencies: {{ name }}Dependencies
+
+    init(dependencies: {{ name }}Dependencies) {
+        self.dependencies = dependencies
+    }
+}
