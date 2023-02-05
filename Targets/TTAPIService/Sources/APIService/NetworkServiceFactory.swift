@@ -4,22 +4,22 @@ import Moya
 public enum NetworkServiceFactory {
     public static func makeTonService(apiProvider: APIBaseInfoProvider) -> TonNetworkService {
         let plugins: [PluginType] = Self.makePlugins(with: apiProvider)
-        return BaseService<TonEndpoints>(apiProvider: apiProvider, plugins: plugins)
+        return BaseService<TonEndpoints>(plugins: plugins)
     }
 
     public static func makePushSubscriptionService(apiProvider: APIBaseInfoProvider) -> PushSubscriptionNetworkService {
         let plugins: [PluginType] = Self.makePlugins(with: apiProvider)
-        return BaseService<DeviceEndpoins>(apiProvider: apiProvider, plugins: plugins)
+        return BaseService<DeviceEndpoins>(plugins: plugins)
     }
     
     public static func makeAccountSubsriptonNetworkService(apiProvider: APIBaseInfoProvider) -> AccountSubsriptonNetworkService {
         let plugins: [PluginType] = Self.makePlugins(with: apiProvider)
-        return BaseService<DeviceEndpoins>(apiProvider: apiProvider, plugins: plugins)
+        return BaseService<DeviceEndpoins>(plugins: plugins)
     }
     
     public static func makeDeviceNetworkService(apiProvider: APIBaseInfoProvider) -> DeviceNetworkService {
         let plugins: [PluginType] = Self.makePlugins(with: apiProvider)
-        return BaseService<DeviceEndpoins>(apiProvider: apiProvider, plugins: plugins)
+        return BaseService<DeviceEndpoins>(plugins: plugins)
     }
 }
 

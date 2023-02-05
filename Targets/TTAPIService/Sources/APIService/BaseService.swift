@@ -4,7 +4,7 @@ import Moya
 class BaseService<Endpoint: TargetType> {
     private let provider: MoyaProvider<Endpoint>
     
-    public init(apiProvider: APIBaseInfoProvider, plugins: [PluginType]) {
+    public init(plugins: [PluginType]) {
         self.provider = MoyaProvider<Endpoint>(plugins: plugins)
     }
 
