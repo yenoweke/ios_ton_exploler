@@ -1,25 +1,30 @@
-//
-//  ErrorView.swift
-//  ton
-//
-//  Created by Dmitrii Chikovinskii on 14.06.2022.
-//
-
 import SwiftUI
-import TonTransactionsKit
 
-struct ErrorViewModel {
-    let title: String
-    let description: String
-    let retry: VoidClosure?
+public struct ErrorViewModel {
+    public let title: String
+    public let description: String
+    public let retry: VoidClosure?
+    
+    public init(title: String, description: String, retry: VoidClosure? = nil) {
+        self.title = title
+        self.description = description
+        self.retry = retry
+    }
+
 }
 
-struct ErrorView: View {
+public struct ErrorView: View {
     let title: String
     let description: String
     let retry: VoidClosure?
     
-    var body: some View {
+    public init(title: String, description: String, retry: VoidClosure? = nil) {
+        self.title = title
+        self.description = description
+        self.retry = retry
+    }
+
+    public var body: some View {
         VStack(alignment: .center, spacing: 16.0) {
             Text(self.title)
                 .font(AppFont.bold.textStyle(.title2))

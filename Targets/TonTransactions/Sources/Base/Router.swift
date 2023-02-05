@@ -6,14 +6,11 @@ public protocol Router: AnyObject {
     var topRouter: Router { get }
     var nextRouter: Router? { get }
 
-//    func show(_ alert: Alert)
     func show(_ coordinator: BaseCoordinator, style: PresentationStyle, animated: Bool, completion: VoidClosure?)
     func show(_ context: RouterTransitionContext)
     func push(_ container: ModuleContainer, completion: VoidClosure?)
     func present(_ container: ModuleContainer, navigationControllerConfig: NavigationControllerConfig?, withCloseButton: Bool, animated: Bool, completion: VoidClosure?)
     func dismissActiveItem(animated: Bool, completion: VoidClosure?)
-//    func makeBusy() -> BusyIndicator?
-
     func set(rootViewController: UIViewController)
 }
 
@@ -124,7 +121,7 @@ open class BaseRouter: Router {
                 completion?()
             })
 
-        case .present://shouldMakeNavigationController, withCloseButton):
+        case .present:
             assertionFailure("unsupported yet")
         }
 
@@ -200,10 +197,6 @@ open class BaseRouter: Router {
         }
     }
 
-//    public func makeBusy() -> BusyIndicator? {
-//        self.presentingViewController?.makeBusy() ?? self.navigationController?.makeBusy()
-//    }
-
     public func addSubRouter(_ router: Router) {
         self.subRouters.add(router)
         self.rootViewController.map(router.set(rootViewController: ))
@@ -217,13 +210,6 @@ open class BaseRouter: Router {
     }
 
 }
-
-//extension BaseRouter: AlertRouter {
-//    public func show(_ alert: Alert) {
-//        let alertController = alert.asAlertViewController
-//        self.presentingViewController?.present(alertController, animated: true)
-//    }
-//}
 
 open class BaseCoordinator {
 
@@ -323,7 +309,6 @@ open class ModuleContainer {
     }
 }
 
-
 public enum PresentationStyle {
     case push
     case present(navigationControllerConfig: NavigationControllerConfig? = nil, withCloseButton: Bool = false)
@@ -351,26 +336,6 @@ public struct RouterTransitionContext {
         self.completion = completion
     }
 }
-
-//public protocol LinkRouter {
-//    func open(urlString: String?)
-//    func open(url: URL)
-//}
-//
-//public extension LinkRouter where Self: BaseRouter {
-//    func open(urlString: String?) {
-//        guard let urlString = urlString, !urlString.isEmpty, let url = URL(string: urlString) else { return }
-//        self.open(url: url)
-//    }
-
-//    func open(url: URL) {
-//        let context = WebViewContext(moduleOutput: nil, url: url)
-//        let container = WebViewContainer.assemble(with: context)
-//        let navigationControllerConfig = NavigationControllerConfig(fullScreen: false)
-//        let transition = RouterTransitionContext(container: container, style: .present(navigationControllerConfig: navigationControllerConfig, withCloseButton: true), animated: true, completion: nil)
-//        self.show(transition)
-//    }
-//}
 
 public final class BlockBarButtonItem: UIBarButtonItem {
     private var handler: VoidClosure?

@@ -1,4 +1,5 @@
 import SwiftUI
+import TonTransactionsUI
 
 final class MessageFilterModuleContainer: ModuleContainer  {
     private struct ContainerView: View {

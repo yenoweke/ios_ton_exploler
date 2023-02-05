@@ -5,6 +5,13 @@ protocol DeeplinkParser {
     func parse(_ urlString: String) -> Deeplink?
 }
 
+extension DeeplinkParser {
+    func parse(_ urlString: String) -> Deeplink? {
+        guard let url = URL(string: urlString) else { return nil }
+        return parse(url)
+    }
+}
+
 final class DeeplinkParserImpl: DeeplinkParser {
     func parse(_ url: URL) -> Deeplink? {
         let currentScheme = "tonsnow"
@@ -24,11 +31,6 @@ final class DeeplinkParserImpl: DeeplinkParser {
         else {
             return Deeplink(host: currentScheme, path: .unkonwn)
         }
-    }
-
-    func parse(_ urlString: String) -> Deeplink? {
-        guard let url = URL(string: urlString) else { return nil }
-        return parse(url)
     }
     
     private func extract(_ components: inout [String]) -> Deeplink.Path? {

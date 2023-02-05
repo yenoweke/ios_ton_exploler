@@ -1,4 +1,5 @@
 import SwiftUI
+import TonTransactionsUI
 
 final class WalletCardModuleContainer: ModuleContainer  {
     struct ContainerView<AddToWatchlistView: View>: View {

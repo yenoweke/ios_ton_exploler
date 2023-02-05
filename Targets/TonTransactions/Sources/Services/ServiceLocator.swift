@@ -1,5 +1,6 @@
 import Foundation
 import TTAPIService
+import TTDeeplinks
 
 final class ServiceLocator {
     

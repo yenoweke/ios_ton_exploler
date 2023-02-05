@@ -8,7 +8,7 @@ public enum NetworkServiceFactory {
     }
 
     public static func makePushSubscriptionService(apiProvider: APIBaseInfoProvider) -> PushSubscriptionNetworkService {
-        let plugins: [PluginType] = Self.makePlugins(with: apiProvider, loggerEnabled: true)
+        let plugins: [PluginType] = Self.makePlugins(with: apiProvider)
         return BaseService<DeviceEndpoins>(apiProvider: apiProvider, plugins: plugins)
     }
     

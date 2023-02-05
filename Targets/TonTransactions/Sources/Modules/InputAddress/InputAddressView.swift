@@ -12,7 +12,7 @@ struct InputAddressView: View {
         VStack {
             Spacer()
             
-            AppImage.Logo.tonLogo.swiftUI
+            AppAssets.Images.Logo.tonLogo.swiftUI
             
             Spacer()
 

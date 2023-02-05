@@ -1,5 +1,6 @@
 import SwiftUI
 import TonTransactionsKit
+import TonTransactionsUI
 
 struct MsgListView: View {
     enum ErrorType {

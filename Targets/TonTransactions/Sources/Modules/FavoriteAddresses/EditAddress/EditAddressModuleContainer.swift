@@ -1,4 +1,5 @@
 import SwiftUI
+import TonTransactionsUI
 
 final class EditAddressModuleContainer: ModuleContainer  {
     private struct ContainerView: View {

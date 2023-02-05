@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import TonTransactionsUI
 
 final class WalletCardViewState: ObservableObject {
 

@@ -34,6 +34,11 @@ let project = Project.app(
         ),
         .name(
             "TonTransactionsUI",
+            dependencies: [],
+            resources: ["Targets/TonTransactionsUI/Resources/**"]
+        ),
+        .name(
+            "TTDeeplinks",
             dependencies: []
         ),
         .name(

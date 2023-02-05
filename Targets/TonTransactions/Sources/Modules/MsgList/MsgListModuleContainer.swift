@@ -1,4 +1,5 @@
 import SwiftUI
+import TonTransactionsUI
 
 final class MsgListModuleContainer: ModuleContainer  {
     struct ContainerView<TopView: View>: View {

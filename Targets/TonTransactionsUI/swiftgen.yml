@@ -1,0 +1,22 @@
+input_dir: Resources/
+output_dir: Sources/Generated/
+
+xcassets:
+  inputs:
+    - Images.xcassets
+    - Colors.xcassets
+  outputs:
+    templateName: swift5
+    params:
+      forceProvidesNamespaces: true
+      publicAccess: true
+    output: Assets.swift
+
+fonts:
+  inputs: Mulish
+  outputs:
+    templateName: swift5
+    params:
+      enumName: "Fonts"
+      publicAccess: true
+    output: Fonts.swift

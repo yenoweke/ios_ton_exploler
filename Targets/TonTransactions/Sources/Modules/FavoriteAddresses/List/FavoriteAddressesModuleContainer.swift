@@ -1,4 +1,5 @@
 import SwiftUI
+import TonTransactionsUI
 
 final class FavoriteAddressesModuleContainer: ModuleContainer  {
     private struct ContainerView: View {

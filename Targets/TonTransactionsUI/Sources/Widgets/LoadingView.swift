@@ -1,14 +1,13 @@
 import SwiftUI
-import TonTransactionsKit
 
-enum LoadingViewState<ViewState> {
+public enum LoadingViewState<ViewState> {
     case initial
     case loading
     case loaded(ViewState)
     case error(ErrorViewModel)
 }
 
-struct LoadingView<ViewState, PlaceholderView: View, ContentView: View, LoadingErrorView: View>: View {
+public struct LoadingView<ViewState, PlaceholderView: View, ContentView: View, LoadingErrorView: View>: View {
     
     @Binding var state: LoadingViewState<ViewState>
 
@@ -16,9 +15,23 @@ struct LoadingView<ViewState, PlaceholderView: View, ContentView: View, LoadingE
     let placeholderView: () -> PlaceholderView
     let loadedView: (ViewState) -> ContentView
     let errorView: (ErrorViewModel) -> LoadingErrorView
+    
+    public init(
+        state: Binding<LoadingViewState<ViewState>>,
+        startInitialLoading: @escaping VoidClosure,
+        placeholderView: @escaping () -> PlaceholderView,
+        loadedView: @escaping (ViewState) -> ContentView,
+        errorView: @escaping (ErrorViewModel) -> LoadingErrorView
+    ) {
+        self._state = state
+        self.startInitialLoading = startInitialLoading
+        self.placeholderView = placeholderView
+        self.loadedView = loadedView
+        self.errorView = errorView
+    }
 
     @ViewBuilder
-    var body: some View {
+    public var body: some View {
         switch state {
         case .initial:
             Color.clear
@@ -39,20 +52,6 @@ struct LoadingView<ViewState, PlaceholderView: View, ContentView: View, LoadingE
 //                retry: retry
 //            )
         }
-    }
-
-    init(
-            state: Binding<LoadingViewState<ViewState>>,
-            startInitialLoading: @escaping VoidClosure,
-            placeholderView: @escaping () -> PlaceholderView,
-            loadedView: @escaping (ViewState) -> ContentView,
-            errorView: @escaping (ErrorViewModel) -> LoadingErrorView
-    ) {
-        self._state = state
-        self.startInitialLoading = startInitialLoading
-        self.placeholderView = placeholderView
-        self.loadedView = loadedView
-        self.errorView = errorView
     }
 }
 

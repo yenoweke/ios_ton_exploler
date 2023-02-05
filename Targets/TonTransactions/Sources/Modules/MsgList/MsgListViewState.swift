@@ -1,5 +1,6 @@
 import Foundation
 import TonTransactionsKit
+import TonTransactionsUI
 
 final class MsgListViewState: ObservableObject {
     @Published var listState = ListState<MessageListItemViewModel>.idle

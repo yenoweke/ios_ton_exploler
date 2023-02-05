@@ -5,20 +5,12 @@ xcassets:
   inputs:
     - Assets.xcassets
     - Images.xcassets
-    - Colors.xcassets
   outputs:
     templateName: swift5
     params:
       forceProvidesNamespaces: true
+      enumName: AppAssets
     output: Assets.swift
-
-fonts:
-  inputs: Mulish
-  outputs:
-    templateName: swift5
-    params:
-      enumName: "Fonts"
-    output: Fonts.swift
 
 strings:
   inputs:

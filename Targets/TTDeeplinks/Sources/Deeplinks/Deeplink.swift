@@ -1,11 +1,11 @@
 import Foundation
 
-struct Deeplink {
-    enum Path {
+public struct Deeplink: Equatable {
+    public enum Path: Equatable {
         case account(String)
         case unkonwn
     }
     
     let host: String
-    let path: Path
+    public let path: Path
 }

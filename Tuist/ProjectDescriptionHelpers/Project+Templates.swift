@@ -8,24 +8,32 @@ import ProjectDescription
 extension Project {
     
     public enum TargetTypeToGenerate {
-        case name(String, dependencies: [TargetDependency])
+        case name(
+            String,
+            dependencies: [TargetDependency],
+            resources: ProjectDescription.ResourceFileElements? = nil
+        )
     }
-    /// Helper function to create the Project for this ExampleApp
+
     public static func app(name: String, platform: Platform, additionalTargets: [TargetTypeToGenerate], dependencies: [TargetDependency]) -> Project {
         
         let appDep: [TargetDependency] = additionalTargets.map { type in
             switch type {
-            case .name(let name, _):
+            case .name(let name, _, _):
                 return TargetDependency.target(name: name)
             }
         }
         
-        
         var targets = makeAppTargets(name: name, platform: platform, dependencies: appDep + dependencies)
         targets += additionalTargets.flatMap({ type -> [Target] in
             switch type {
-            case .name(let name, let dependencies):
-                return makeFrameworkTargets(name: name, platform: platform, dependencies: dependencies)
+            case .name(let name, let dependencies, let resources):
+                return makeFrameworkTargets(
+                    name: name,
+                    platform: platform,
+                    dependencies: dependencies,
+                    resources: resources
+                )
             }
         })
         
@@ -44,7 +52,12 @@ extension Project {
     // MARK: - Private
 
     /// Helper function to create a framework target and an associated unit test target
-    private static func makeFrameworkTargets(name: String, platform: Platform, dependencies: [TargetDependency]) -> [Target] {
+    private static func makeFrameworkTargets(
+        name: String,
+        platform: Platform,
+        dependencies: [TargetDependency],
+        resources: ProjectDescription.ResourceFileElements?
+    ) -> [Target] {
         
         
         let sources = Target(name: name,
@@ -54,7 +67,7 @@ extension Project {
                 deploymentTarget: .iOS(targetVersion: "15.1", devices: .iphone),
                 infoPlist: .default,
                 sources: ["Targets/\(name)/Sources/**"],
-                resources: [],
+                resources: resources,
                 dependencies: dependencies
         )
         
@@ -101,6 +114,18 @@ extension Project {
             resources: ["Targets/\(name)/Resources/**"],
             dependencies: dependencies
         )
-        return [mainTarget]
+
+        let tests = Target(
+            name: "TonMainAppTests",
+            platform: platform,
+            product: .unitTests,
+            bundleId: "space.dmitrii.\(name)Tests",
+            infoPlist: .default,
+            sources: ["Targets/\(name)/Tests/**"],
+            resources: [],
+            dependencies: [.target(name: name)]
+        )
+
+        return [mainTarget, tests]
     }
 }

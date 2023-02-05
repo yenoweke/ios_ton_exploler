@@ -1,1 +1,1 @@
-typealias VoidClosure = () -> Void
+public typealias VoidClosure = () -> Void

@@ -33,7 +33,7 @@ private let signatureKey = "TT_header_signature"
 
 extension String {
    static func random(of n: Int) -> String {
-      let digits = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-      return String(Array(0..<n).map { _ in digits.randomElement()! })
+      let availableChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+      return String(Array(0..<n).map { _ in availableChars.randomElement()! })
    }
 }

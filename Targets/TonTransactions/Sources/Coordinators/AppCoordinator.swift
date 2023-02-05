@@ -1,24 +1,26 @@
 import Foundation
 import UIKit
 import TonTransactionsUI
+import TTDeeplinks
 
 final class AppCoordinator {
     private let serviceLocator: ServiceLocator
-
     private let tabBarController = UITabBarController()
+    private let preparer: Preparer
     
     private lazy var tabBarControllerDelegateAdapter = TabBarControllerDelegateAdapter()
     private var inputAddressRouter: Router?
     private var watchlistRouter: Router?
 
     private weak var appDelegate: AppDelegateHandlerOwner?
+    private var strongReferences: [Any] = []
     private var window: UIWindow?
-    private let preparer: Preparer
     
     init(appDelegate: AppDelegateHandlerOwner) {
         self.appDelegate = appDelegate
         let pushManagerImpl = PushManagerImpl(networkService: ServiceLocator.makePushSubsriptionService())
-        let deeplinkManager = DeeplinkManagerImpl(parser: DeeplinkParserImpl())
+        let deeplinkManager = DeeplinkManagerFactory.make()
+        
         self.serviceLocator = ServiceLocator(pushManager: pushManagerImpl, deeplinkManager: deeplinkManager)
         appDelegate.add(handler: pushManagerImpl.appDelegateHandler)
         
@@ -26,15 +28,7 @@ final class AppCoordinator {
             DeviceCreatorImpl(network: serviceLocator.makeDeviceNetworkService())
         ])
         
-        let defaultDeeplinkHandler = DefaultDeeplinkHandler(serviceLocator: self.serviceLocator, rootRouter: { [weak self] in
-            if self?.tabBarControllerDelegateAdapter.selected == 1 {
-                return self?.watchlistRouter
-            }
-            return self?.inputAddressRouter
-        })
-        deeplinkManager.defaultHandler = defaultDeeplinkHandler
-        appDelegate.add(handler: deeplinkManager.appDelegateHandler)
-        pushManagerImpl.add(listener: deeplinkManager)
+        self.setupDeeplinkManager(deeplinkManager)
     }
     
     func start() {
@@ -89,6 +83,37 @@ private extension AppCoordinator {
         if #available(iOS 15.0, *) {
             UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         }
+    }
+    
+    func setupDeeplinkManager(_ deeplinkManager: DeeplinkManager) {
+        let defaultDeeplinkHandler = DefaultDeeplinkHandler(serviceLocator: self.serviceLocator, rootRouter: { [weak self] in
+            if self?.tabBarControllerDelegateAdapter.selected == 1 {
+                return self?.watchlistRouter
+            }
+            return self?.inputAddressRouter
+        })
+        deeplinkManager.add(handler: defaultDeeplinkHandler)
+        self.strongReferences.append(defaultDeeplinkHandler)
+        
+        let deeplinkManagerAppDelegateHandler = AppDelegateHandler()
+        
+        deeplinkManagerAppDelegateHandler.openURLHandler = { _, url, _ in
+            _ = deeplinkManager.handle(url)
+        }
+        deeplinkManagerAppDelegateHandler.didReceiveRemoteNotification = { _, userInfo, completion in
+            guard let url = userInfo["url"] as? URL else { return }
+            _ = deeplinkManager.handle(url)
+            completion(.newData)
+        }
+        
+        self.strongReferences.append(deeplinkManagerAppDelegateHandler)
+        self.appDelegate?.add(handler: deeplinkManagerAppDelegateHandler)
+    }
+}
+
+extension AppCoordinator: PushManagerNotificationListener {
+    func pushManagerDidReceive(url: URL) {
+        _ = self.serviceLocator.deeplinkManager.handle(url)
     }
 }
 

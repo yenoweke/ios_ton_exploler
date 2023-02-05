@@ -1,11 +1,5 @@
-//
-//  InputAddressModuleContainer.swift
-//  ton
-//
-//  Created by Dmitrii Chikovinskii on 13.06.2022.
-//
-
 import SwiftUI
+import TonTransactionsUI
 
 final class InputAddressModuleContainer: ModuleContainer {
     private struct ContainerView: View {
